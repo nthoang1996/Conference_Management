@@ -5,6 +5,11 @@
  */
 package conferencemanagement;
 
+import conferencemanagement.utils.Config;
+import conferencemanagement.utils.GlobalData;
+import conferencemanagement.utils.PasswordUtils;
+import dao.TblUserDAO;
+import entity.Tbluser;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,7 +20,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -35,6 +43,13 @@ public class SignInDialogController implements Initializable {
     
     @FXML
     private Button btnSignUp;
+    
+    @FXML 
+    private TextField textFieldUsername;
+    
+    @FXML
+    private PasswordField pwFieldPassword;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -62,5 +77,35 @@ public class SignInDialogController implements Initializable {
     private void DoCancle(MouseEvent event){
         Stage stage = (Stage)btnCancle.getScene().getWindow();
         stage.close();
+    }
+    
+    @FXML
+    private void DoSignIn(MouseEvent event){
+        Tbluser user = TblUserDAO.singleByUsername(textFieldUsername.getText());
+        if(user == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Sign in failed");
+            alert.setHeaderText("Sign in failed");
+            alert.setContentText("Sign in failed. Username does not exist!");
+            alert.showAndWait();
+            return;
+        }
+        boolean passwordMatch = PasswordUtils.verifyUserPassword(pwFieldPassword.getText(), user.getPassword(), Config.salt);
+        if(passwordMatch) 
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sign in success");
+            alert.setHeaderText("Sign in success");
+            alert.setContentText("Sign in success. Hello " + user.getName() + "!");
+            GlobalData.currentUser = user;
+            alert.showAndWait();
+            DoCancle(event);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Sign in failed");
+            alert.setHeaderText("Sign in failed");
+            alert.setContentText("Sign in failed. Incorrect password");
+            alert.showAndWait();
+        }
     }
 }

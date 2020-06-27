@@ -5,6 +5,7 @@
  */
 package conferencemanagement;
 
+import conferencemanagement.utils.Config;
 import conferencemanagement.utils.PasswordUtils;
 import entity.Tbluser;
 import java.net.URL;
@@ -82,6 +83,12 @@ public class SignUpDialogController implements Initializable {
             return false;
         }
         
+        if(TblUserDAO.singleByUsername(textFieldUsername.getText()) != null){
+            alert.setContentText("Username is exist. Please chose order username!");
+            alert.showAndWait();
+            return false;
+        }
+        
         if(pwFieldPassword.getText().trim().equals("")){
             alert.setContentText("Password can not be null");
             alert.showAndWait();
@@ -104,8 +111,7 @@ public class SignUpDialogController implements Initializable {
             String email = textFieldEmail.getText().trim();
             String username = textFieldUsername.getText().trim();
             String password = pwFieldPassword.getText().trim();
-            String salt = PasswordUtils.getSalt(30);
-            String mySecurePassword = PasswordUtils.generateSecurePassword(password, salt);
+            String mySecurePassword = PasswordUtils.generateSecurePassword(password, Config.salt);
             int roleId = 3;
             Tbluser userRegister = new Tbluser(name, email, username, mySecurePassword, roleId, false);
             TblUserDAO.insert(userRegister);
@@ -114,6 +120,7 @@ public class SignUpDialogController implements Initializable {
             alert.setHeaderText("Sign up success");
             alert.setContentText("Sign up success. Now you can use this to login!");
             alert.showAndWait();
+            DoCancle(event);
         }     
     }  
 }

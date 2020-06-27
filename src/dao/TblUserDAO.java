@@ -6,8 +6,11 @@
 package dao;
 
 import entity.Tbluser;
+import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 /**
  *
@@ -23,5 +26,18 @@ public class TblUserDAO {
         tx.commit();
 //        session.flush();
         session.close();
+    }
+    
+    public static Tbluser singleByUsername(String username){
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        
+        Query query = session.createQuery("from Tbluser where username = '" + username +"'");
+        if(query.list().size() < 1){
+            return null;
+        }
+        Tbluser user = (Tbluser)query.list().get(0);
+        session.close();
+        return user;
     }
 }

@@ -29,6 +29,11 @@
                   <Font size="17.0" />
                </font>
             </Button>
+            <Label fx:id="lblCurrentUser" alignment="CENTER_RIGHT" layoutX="1654.0" layoutY="18.0" prefHeight="27.0" prefWidth="241.0" style="-fx-background-color: #7D6F6F; -fx-padding: 0px 5px 0px 5px; -fx-underline: true;" text="Label">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <BorderPane fx:id="bpBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1098.0" prefWidth="1920.0">
