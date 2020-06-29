@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="acItemConference" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox fx:id="hBContainerConference" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="910.0">
+         <children>
+            <ImageView fx:id="imgAvatar" fitHeight="250.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox fx:id="vBoxDes" prefHeight="250.0" prefWidth="510.0">
+               <children>
+                  <Label fx:id="lblNameConference" text="Name Conference" textFill="#0015ff">
+                     <VBox.margin>
+                        <Insets left="10.0" top="25.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Label>
+                  <HBox fx:id="hBInfo" prefWidth="510.0">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label fx:id="lblStarttTime" text="Start">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="lblTakeTime" layoutX="10.0" layoutY="10.0" text="Time">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label fx:id="lblAddress" layoutX="15.0" layoutY="63.0" text="Address">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="lblOverview" layoutX="15.0" layoutY="89.0" text="Overview">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="lblLimit" text="Limit">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="lblNumRegis" text="Number Registered">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

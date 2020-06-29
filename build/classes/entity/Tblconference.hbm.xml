@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 29, 2020 6:00:56 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.Tblconference" table="tblconference" catalog="conference_management" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="256" not-null="true" />
+        </property>
+        <property name="overview" type="string">
+            <column name="overview" length="65535" not-null="true" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="65535" not-null="true" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="256" not-null="true" />
+        </property>
+        <property name="limit" type="int">
+            <column name="limit" not-null="true" />
+        </property>
+        <property name="participant" type="string">
+            <column name="participant" not-null="false" />
+        </property>
+        <property name="startTime" type="timestamp">
+            <column name="start_time" length="19" not-null="true" />
+        </property>
+        <property name="endTime" type="timestamp">
+            <column name="end_time" length="19" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -3,15 +3,16 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vLayoutMain" prefHeight="1180.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="conferencemanagement.FXMLDocumentController">
+<VBox fx:id="vLayoutMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1190.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="conferencemanagement.FXMLDocumentController">
    <children>
-      <AnchorPane fx:id="acHeader" prefHeight="51.0" prefWidth="1932.0" style="-fx-border-color: #757070; -fx-border-width: 0px 0px 5px 0px; -fx-background-color: #7D6F6F;">
+      <AnchorPane fx:id="acHeader" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="1200.0" style="-fx-border-color: #757070; -fx-border-width: 0px 0px 5px 0px; -fx-background-color: #7D6F6F;">
          <VBox.margin>
             <Insets />
          </VBox.margin>
@@ -24,23 +25,23 @@
                   <Insets />
                </opaqueInsets>
             </Label>
-            <Button fx:id="btnSignin" layoutX="1740.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#SignIn" prefHeight="37.0" prefWidth="155.0" style="-fx-background-color: #685C5C;" text="Sign in" textFill="WHITE">
+            <Button fx:id="btnSignin" layoutX="1013.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#SignIn" prefHeight="37.0" prefWidth="155.0" style="-fx-background-color: #685C5C;" text="Sign in" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
-            <Label fx:id="lblCurrentUser" alignment="CENTER_RIGHT" layoutX="1654.0" layoutY="18.0" prefHeight="27.0" prefWidth="241.0" style="-fx-background-color: #7D6F6F; -fx-padding: 0px 5px 0px 5px; -fx-underline: true;" text="Label">
+            <Label fx:id="lblCurrentUser" alignment="CENTER_RIGHT" layoutX="914.0" layoutY="12.0" prefHeight="27.0" prefWidth="241.0" style="-fx-background-color: #7D6F6F; -fx-padding: 0px 5px 0px 5px; -fx-underline: true;" text="Label">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <BorderPane fx:id="bpBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1098.0" prefWidth="1920.0">
+      <BorderPane fx:id="bpBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0">
          <left>
-            <VBox fx:id="vBSideBar" prefHeight="1098.0" prefWidth="201.0" style="-fx-background-color: #0D1B24;" BorderPane.alignment="CENTER">
+            <VBox fx:id="vBSideBar" prefHeight="700.0" prefWidth="200.0" style="-fx-background-color: #0D1B24;" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btnHomePage" mnemonicParsing="false" onMouseClicked="#ToHome" prefHeight="81.0" prefWidth="201.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Home" textFill="#f2f2f2">
+                  <Button fx:id="btnHomePage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#ToHome" prefHeight="81.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Home" textFill="#f2f2f2">
                      <font>
                         <Font size="25.0" />
                      </font>
@@ -64,25 +65,34 @@
             </VBox>
          </left>
          <center>
-            <AnchorPane fx:id="apContainer" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #14242B;" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="apContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #14242B;" BorderPane.alignment="CENTER">
                <children>
-                  <VBox prefHeight="1098.0" prefWidth="1719.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane fx:id="acStyleView" prefHeight="42.0" prefWidth="1719.0">
+                        <AnchorPane fx:id="acStyleView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="1000.0">
                            <children>
-                              <RadioButton fx:id="radioViewList" layoutX="1425.0" layoutY="13.0" mnemonicParsing="false" selected="true" text="View as List" textFill="WHITE">
+                              <RadioButton fx:id="radioViewList" layoutX="750.0" layoutY="13.0" mnemonicParsing="false" selected="true" text="View as List" textFill="WHITE">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
                               </RadioButton>
-                              <RadioButton fx:id="radioViewCard" layoutX="1555.0" layoutY="13.0" mnemonicParsing="false" text="View as Card" textFill="WHITE">
+                              <RadioButton fx:id="radioViewCard" layoutX="870.0" layoutY="13.0" mnemonicParsing="false" text="View as Card" textFill="WHITE">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
                               </RadioButton>
+                              <Label fx:id="lblHeaderHome" layoutX="14.0" layoutY="15.0" style="-fx-font-weight: bold;" text="Home Page" textFill="WHITE" underline="true">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="1057.0" prefWidth="1719.0" />
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0">
+                           <children>
+                              <ListView fx:id="lvConference" layoutX="27.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="960.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </VBox>
                </children>
