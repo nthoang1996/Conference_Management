@@ -9,47 +9,41 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="acItemConference" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane id="AnchorPane" prefHeight="525.0" prefWidth="400.0" style="-fx-border-width: 1px; -fx-border-radius: 0px 0px 20px 20px; -fx-border-color: black; -fx-padding: 2px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="conferencemanagement.ConferenceCardItemController">
    <children>
-      <HBox fx:id="hBContainerConference" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="910.0">
+      <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="4.0" prefHeight="525.0" prefWidth="407.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fx:id="imgAvatar" fitHeight="250.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
-            <VBox fx:id="vBoxDes" prefHeight="250.0" prefWidth="510.0">
+            <Label fx:id="lblNameConference" text="Name Conference" textFill="#0015ff">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+            <VBox prefHeight="225.0" prefWidth="100.0">
                <children>
-                  <HBox alignment="TOP_RIGHT" prefHeight="27.0" prefWidth="510.0">
+                  <VBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="400.0">
                      <children>
                         <Button fx:id="btnDetail" mnemonicParsing="false" onAction="#DoDetailItem" style="-fx-padding: 5px 20px;" text="🡆">
                            <font>
                               <Font size="15.0" />
                            </font>
-                           <HBox.margin>
-                              <Insets right="2.0" top="2.0" />
-                           </HBox.margin>
+                           <VBox.margin>
+                              <Insets right="2.0" />
+                           </VBox.margin>
                         </Button>
                      </children>
-                  </HBox>
-                  <Label fx:id="lblNameConference" text="Name Conference" textFill="#0015ff">
+                  </VBox>
+                  <HBox>
                      <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="29.0" />
-                     </font>
-                  </Label>
-                  <HBox fx:id="hBInfo" prefWidth="510.0">
-                     <VBox.margin>
-                        <Insets top="20.0" />
+                        <Insets left="20.0" top="5.0" />
                      </VBox.margin>
                      <children>
                         <Label fx:id="lblStarttTime" text="Start">
                            <font>
                               <Font size="15.0" />
                            </font>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
                         </Label>
-                        <Label fx:id="lblTakeTime" layoutX="10.0" layoutY="10.0" text="Time">
+                        <Label fx:id="lblTakeTime" text="Time">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -59,15 +53,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Label fx:id="lblAddress" layoutX="15.0" layoutY="63.0" text="Address">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="20.0" top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="lblOverview" layoutX="15.0" layoutY="89.0" text="Overview">
+                  <Label fx:id="lblAddress" text="Address">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -83,21 +69,25 @@
                         <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <HBox>
+                  <Label fx:id="lblNumRegis" text="Number Registered">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
                      <VBox.margin>
                         <Insets left="20.0" top="10.0" />
                      </VBox.margin>
-                     <children>
-                        <Label fx:id="lblNumRegis" text="Number Registered">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
+                  </Label>
+                  <Label fx:id="lblOverview" style="-fx-wrap-text: true;" text="Overview">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
                </children>
             </VBox>
          </children>
-      </HBox>
+      </VBox>
    </children>
 </AnchorPane>

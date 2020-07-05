@@ -88,11 +88,15 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0">
-                           <children>
-                              <ListView fx:id="lvConference" layoutX="27.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="960.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
-                           </children>
-                        </AnchorPane>
+                        <BorderPane fx:id="bpListconference">
+                           <center>
+                              <ListView fx:id="lvConference" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="960.0">
+                                 <BorderPane.margin>
+                                    <Insets bottom="20.0" top="20.0" />
+                                 </BorderPane.margin>
+                              </ListView>
+                           </center>
+                        </BorderPane>
                      </children>
                   </VBox>
                </children>

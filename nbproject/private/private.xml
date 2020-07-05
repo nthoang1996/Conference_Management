@@ -3,18 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/hibernate.reveng.xml</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/utils/Config.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceDetailController.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceItemController.java</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceManagement.java</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/hibernate.cfg.xml</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/entity/Tblconference.hbm.xml</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/dao/TblUserDAO.java</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/entity/Tblconference.java</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/dao/TblConferenceDAO.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceDetail.fxml</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/utils/GlobalData.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceCardItemController.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/FXMLDocument.fxml</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/FXMLDocumentController.java</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceItem.fxml</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceCardItem.fxml</file>
         </group>
     </open-files>
 </project-private>

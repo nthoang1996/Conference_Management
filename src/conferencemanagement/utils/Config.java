@@ -13,4 +13,5 @@ import java.util.Properties;
  */
 public class Config {
     public static String salt = "HhaNvzTsVYwS/x/zbYXlLOE3ETMXQgllqrDaJY9PD/U=";
+    public static int Columns = 2;
 }
