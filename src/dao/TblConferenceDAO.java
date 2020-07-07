@@ -8,6 +8,7 @@ package dao;
 import entity.Tblconference;
 import java.util.List;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -36,5 +37,30 @@ public class TblConferenceDAO {
             return null;
         }
         return query.list();
+    }
+    
+    public static void register(int id, int userID){
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        Tblconference conference = (Tblconference) session.load(Tblconference.class, id);
+        tx.commit();
+
+        String query = "UPDATE Tblconference SET participant = '"+ conference.getParticipant() + userID + "," +"' WHERE id = '"+ id + "'";
+        SQLQuery sqlQuery = session.createSQLQuery(query);
+        sqlQuery.executeUpdate();
+        session.close();
+    }
+    
+    public static void unRegister(int id, int userID){
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        Tblconference conference = (Tblconference) session.load(Tblconference.class, id);
+        String [] arrStr = conference.getParticipant().split(",");
+        tx.commit();
+
+        String query = "UPDATE Tblconference SET participant = '"+ conference.getParticipant() + userID + "," +"' WHERE id = '"+ id + "'";
+        SQLQuery sqlQuery = session.createSQLQuery(query);
+        sqlQuery.executeUpdate();
+        session.close();
     }
 }

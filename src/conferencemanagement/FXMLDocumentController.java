@@ -86,9 +86,9 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private GridPane gpConference = new GridPane();
-    
+
     private ScrollPane spContainer = new ScrollPane();
-    
+
     private VBox vbContainer = new VBox();
 
     @FXML
@@ -120,6 +120,7 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        GlobalData.mainController = this;
         lblCurrentUser.setVisible(false);
         lvConference.setItems(conferenceObservableList);
         lvConference.setCellFactory(new Callback<ListView<Tblconference>, ListCell<Tblconference>>() {
@@ -132,8 +133,8 @@ public class FXMLDocumentController implements Initializable {
         for (int i = 0; i < conferenceObservableList.size(); i++) {
             Parent root = null;
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ConferenceCardItem.fxml"));  
-                root = (Parent)fxmlLoader.load();   
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ConferenceCardItem.fxml"));
+                root = (Parent) fxmlLoader.load();
                 ConferenceCardItemController controller = fxmlLoader.<ConferenceCardItemController>getController();
                 controller.setConference(conferenceObservableList.get(i));
                 fxmlLoader.setController(controller);
@@ -148,11 +149,10 @@ public class FXMLDocumentController implements Initializable {
                 colCnt = 0;
             }
         }
-        
+
         spContainer.setContent(gpConference);
         vbContainer.getChildren().add(spContainer);
-        VBox.setMargin(this.spContainer, new Insets( 20, 20, 20, 20 ) );
-        
+        VBox.setMargin(this.spContainer, new Insets(20, 20, 20, 20));
 
         radioViewList.setToggleGroup(groupType);
         radioViewCard.setToggleGroup(groupType);
@@ -186,8 +186,14 @@ public class FXMLDocumentController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         bpBody.setCenter(root);
     }
 
+    public void reload() {
+        if (GlobalData.currentUser != null) {
+            btnSignin.setVisible(false);
+            lblCurrentUser.setText("Hi " + GlobalData.currentUser.getName() + "!");
+            lblCurrentUser.setVisible(true);
+        }
+    }
 }

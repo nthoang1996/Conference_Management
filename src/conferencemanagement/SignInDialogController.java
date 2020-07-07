@@ -99,6 +99,7 @@ public class SignInDialogController implements Initializable {
             alert.setContentText("Sign in success. Hello " + user.getName() + "!");
             GlobalData.currentUser = user;
             alert.showAndWait();
+            GlobalData.mainController.reload();
             DoCancle(event);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);

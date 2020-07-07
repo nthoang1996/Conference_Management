@@ -5,6 +5,7 @@
  */
 package conferencemanagement;
 
+import conferencemanagement.utils.GlobalData;
 import entity.Tblconference;
 import java.io.IOException;
 import java.net.URL;
@@ -111,8 +112,13 @@ public class ConferenceItemController extends ListCell<Tblconference>{
             lblStarttTime.setText("Start time: " + format.format(calStart.getTime()));
             lblTakeTime.setText("End time: " + format.format(calEnd.getTime()));
             lblLimit.setText("Limit: " + conference.getLimit());
-            String [] numRegister = conference.getParticipant().split(",");
-            lblNumRegis.setText("Number registed: " + (numRegister.length-1));
+            if(conference.getParticipant().equals("")){
+                lblNumRegis.setText("Number registed: 0");
+            }
+            else{
+                String [] numRegister = conference.getParticipant().split(",");
+                lblNumRegis.setText("Number registed: " + (numRegister.length));
+            }
             lblAddress.setText("Address: " + conference.getAddress());
             lblOverview.setText("Overview: "+ conference.getOverview());
 
@@ -129,7 +135,7 @@ public class ConferenceItemController extends ListCell<Tblconference>{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ConferenceDetail.fxml"));
             Parent parent = fxmlLoader.load();
             ConferenceDetailController controller = fxmlLoader.<ConferenceDetailController>getController();
-            controller.setConference(this.conference);
+            controller.setConference(this.conference, GlobalData.currentUser);
             Scene scene = new Scene(parent, 600, 400);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);

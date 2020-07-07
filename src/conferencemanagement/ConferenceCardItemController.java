@@ -6,6 +6,7 @@
 package conferencemanagement;
 
 import com.sun.imageio.plugins.common.I18N;
+import conferencemanagement.utils.GlobalData;
 import entity.Tblconference;
 import java.io.IOException;
 import java.net.URL;
@@ -85,8 +86,13 @@ public class ConferenceCardItemController implements Initializable {
             lblStarttTime.setText("Start time: " + format.format(calStart.getTime()));
             lblTakeTime.setText("End time: " + format.format(calEnd.getTime()));
             lblLimit.setText("Limit: " + this.conferenceItem.getLimit());
-            String [] numRegister = this.conferenceItem.getParticipant().split(",");
-            lblNumRegis.setText("Number registed: " + (numRegister.length-1));
+            if(this.conferenceItem.getParticipant().equals("")){
+                lblNumRegis.setText("Number registed: 0");
+            }
+            else{
+                String [] numRegister = this.conferenceItem.getParticipant().split(",");
+                lblNumRegis.setText("Number registed: " + (numRegister.length));
+            }
             lblAddress.setText("Address: " + this.conferenceItem.getAddress());
             lblOverview.setText("Overview: "+ this.conferenceItem.getOverview());
         });
@@ -102,7 +108,7 @@ public class ConferenceCardItemController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ConferenceDetail.fxml"));
             Parent parent = fxmlLoader.load();
             ConferenceDetailController controller = fxmlLoader.<ConferenceDetailController>getController();
-            controller.setConference(this.conferenceItem);
+            controller.setConference(this.conferenceItem, GlobalData.currentUser);
             Scene scene = new Scene(parent, 600, 400);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
