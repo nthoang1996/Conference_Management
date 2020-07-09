@@ -85,8 +85,6 @@ public class FXMLDocumentController implements Initializable {
         bpBody.setCenter(apContainer);
     }
 
-    private GridPane gpConference = new GridPane();
-
     private ScrollPane spContainer = new ScrollPane();
 
     private VBox vbContainer = new VBox();
@@ -121,6 +119,7 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         GlobalData.mainController = this;
+        GridPane gpConference = new GridPane();
         lblCurrentUser.setVisible(false);
         lvConference.setItems(conferenceObservableList);
         lvConference.setCellFactory(new Callback<ListView<Tblconference>, ListCell<Tblconference>>() {
@@ -195,5 +194,44 @@ public class FXMLDocumentController implements Initializable {
             lblCurrentUser.setText("Hi " + GlobalData.currentUser.getName() + "!");
             lblCurrentUser.setVisible(true);
         }
+    }
+    
+    public void reloadContainer(){
+        List<Tblconference> listConference = TblConferenceDAO.all();
+        conferenceObservableList = FXCollections.observableArrayList(listConference);
+        GridPane gpConference = new GridPane();
+        lvConference.setItems(conferenceObservableList);
+        lvConference.setCellFactory(new Callback<ListView<Tblconference>, ListCell<Tblconference>>() {
+            @Override
+            public ListCell<Tblconference> call(ListView<Tblconference> studentListView) {
+                return new ConferenceItemController();
+            }
+        });
+        int colCnt = 0, rowCnt = 0;
+        for (int i = 0; i < conferenceObservableList.size(); i++) {
+            Parent root = null;
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ConferenceCardItem.fxml"));
+                root = (Parent) fxmlLoader.load();
+                ConferenceCardItemController controller = fxmlLoader.<ConferenceCardItemController>getController();
+                controller.setConference(conferenceObservableList.get(i));
+                fxmlLoader.setController(controller);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            GridPane.setMargin(root, new Insets(20, 35, 20, 35));
+            gpConference.add(root, colCnt, rowCnt);
+            colCnt++;
+            if (colCnt >= Config.Columns) {
+                rowCnt++;
+                colCnt = 0;
+            }
+        }
+
+        spContainer.setContent(gpConference);
+        vbContainer.getChildren().clear();
+        vbContainer.getChildren().add(spContainer);
+        VBox.setMargin(this.spContainer, new Insets(20, 20, 20, 20));
+        
     }
 }

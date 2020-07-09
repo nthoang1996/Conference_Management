@@ -19,14 +19,4 @@ public class Helper {
         }
         return false;
     }
-    
-    public static boolean removeString(String str, String [] arrStr){
-        for (String element : arrStr) 
-        {
-            if (element.equals(str)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
