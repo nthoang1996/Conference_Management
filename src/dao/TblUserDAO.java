@@ -5,6 +5,7 @@
  */
 package dao;
 
+import static dao.TblConferenceDAO.session;
 import entity.Tbluser;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -39,5 +40,33 @@ public class TblUserDAO {
         Tbluser user = (Tbluser)query.list().get(0);
         session.close();
         return user;
+    }
+    
+    public static void update(Tbluser user){
+        session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        System.out.println("dao.TblUserDAO.update()"+ user.getPassword().equals(""));
+        System.out.println("dao.TblUserDAO.update()"+ user.getPassword());
+        if(user.getPassword().equals("")){
+            String hql = "UPDATE Tbluser set name = :name, email = :email "  + 
+             "WHERE id = :user_id";
+            Query query = session.createQuery(hql);
+            query.setParameter("name", user.getName());
+            query.setParameter("email", user.getEmail());
+            query.setParameter("user_id", user.getId());
+            query.executeUpdate();
+        }
+        else{
+            String hql = "UPDATE Tbluser set name = :name, email = :email, password = :password "  + 
+             "WHERE id = :user_id";
+            Query query = session.createQuery(hql);
+            query.setParameter("name", user.getName());
+            query.setParameter("email", user.getEmail());
+            query.setParameter("password", user.getPassword());
+            query.setParameter("user_id", user.getId());
+            query.executeUpdate();
+        }
+        session.getTransaction().commit();
+        session.close();
     }
 }

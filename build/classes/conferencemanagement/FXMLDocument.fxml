@@ -46,7 +46,7 @@
                         <Font size="25.0" />
                      </font>
                   </Button>
-                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#ToPageOrder" prefHeight="81.0" prefWidth="201.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="PageOrder" textFill="#f2f2f2">
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#ProfilePage" prefHeight="81.0" prefWidth="201.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Profile" textFill="#f2f2f2">
                      <font>
                         <Font size="25.0" />
                      </font>

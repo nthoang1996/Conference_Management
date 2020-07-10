@@ -44,7 +44,6 @@ public class TblConferenceDAO {
 
     public static void register(int id, String dataQuery) {
         session = HibernateUtil.getSessionFactory().openSession();
-        System.out.println("dao.TblConferenceDAO.register()" + dataQuery);
         session.beginTransaction();
         String hql = "UPDATE Tblconference set participant = :participant "  + 
              "WHERE id = :conference_id";

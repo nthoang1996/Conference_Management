@@ -90,8 +90,8 @@ public class FXMLDocumentController implements Initializable {
     private VBox vbContainer = new VBox();
 
     @FXML
-    private void ToPageOrder(MouseEvent event) {
-        loadPage("ToPageOrder");
+    private void ProfilePage(MouseEvent event) {
+        loadPage("ProfilePage");
     }
 
     @FXML
