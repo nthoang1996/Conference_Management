@@ -5,6 +5,8 @@
  */
 package dao;
 
+import conferencemanagement.utils.GlobalData;
+import conferencemanagement.utils.Helper;
 import entity.Tblconference;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +42,18 @@ public class TblConferenceDAO {
             return null;
         }
         return query.list();
+    }
+    
+    public static ArrayList<Tblconference> allByUser(){
+        List<Tblconference> listConference = all();
+        ArrayList<Tblconference> listMyConference = new ArrayList<>();
+        for (int i=0; i<listConference.size(); i++){
+            String[] arrPar = listConference.get(i).getParticipant().split(",");
+            if(Helper.checkInclude(GlobalData.currentUser.getId() + "", arrPar)){
+                listMyConference.add(listConference.get(i));
+            }
+        }
+        return listMyConference;
     }
 
     public static void register(int id, String dataQuery) {

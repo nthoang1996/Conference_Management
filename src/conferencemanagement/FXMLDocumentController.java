@@ -79,6 +79,12 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private BorderPane bpListconference;
+    
+    @FXML
+    private Button btnProfile;
+    
+    @FXML
+    private Button btnMyConference;
 
     @FXML
     private void ToHome(MouseEvent event) {
@@ -92,6 +98,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void ProfilePage(MouseEvent event) {
         loadPage("ProfilePage");
+    }
+    
+    @FXML
+    private void MyConference(MouseEvent event) {
+        loadPage("MyConference");
     }
 
     @FXML
@@ -114,11 +125,23 @@ public class FXMLDocumentController implements Initializable {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void checkAuthorize(){
+        if(GlobalData.currentUser == null){
+            btnProfile.setVisible(false);
+            btnMyConference.setVisible(false);
+        }
+        else if(GlobalData.currentUser.getRoleId() == 1){
+            btnProfile.setVisible(true);
+            btnMyConference.setVisible(true);
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         GlobalData.mainController = this;
+        checkAuthorize();
         GridPane gpConference = new GridPane();
         lblCurrentUser.setVisible(false);
         lvConference.setItems(conferenceObservableList);
@@ -193,6 +216,7 @@ public class FXMLDocumentController implements Initializable {
             btnSignin.setVisible(false);
             lblCurrentUser.setText("Hi " + GlobalData.currentUser.getName() + "!");
             lblCurrentUser.setVisible(true);
+            checkAuthorize();
         }
     }
     

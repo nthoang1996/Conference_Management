@@ -46,12 +46,12 @@
                         <Font size="25.0" />
                      </font>
                   </Button>
-                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#ProfilePage" prefHeight="81.0" prefWidth="201.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Profile" textFill="#f2f2f2">
+                  <Button fx:id="btnProfile" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#ProfilePage" prefHeight="81.0" prefWidth="201.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Profile" textFill="#f2f2f2">
                      <font>
                         <Font size="25.0" />
                      </font>
                   </Button>
-                  <Button layoutX="10.0" layoutY="91.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="201.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Home" textFill="#f2f2f2">
+                  <Button fx:id="btnMyConference" layoutX="10.0" layoutY="91.0" mnemonicParsing="false" onMouseClicked="#MyConference" prefHeight="81.0" prefWidth="201.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="MyConference" textFill="#f2f2f2">
                      <font>
                         <Font size="25.0" />
                      </font>
