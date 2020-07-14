@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Jun 29, 2020 6:00:56 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Jul 13, 2020 1:29:28 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="entity.Tblconference" table="tblconference" catalog="conference_management" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
@@ -22,9 +22,6 @@
         </property>
         <property name="limit" type="int">
             <column name="limit" not-null="true" />
-        </property>
-        <property name="participant" type="string">
-            <column name="participant" not-null="false" />
         </property>
         <property name="startTime" type="timestamp">
             <column name="start_time" length="19" not-null="true" />

@@ -7,7 +7,13 @@ package dao;
 
 import conferencemanagement.utils.GlobalData;
 import conferencemanagement.utils.Helper;
+import static dao.TblUserDAO.session;
+import static dao.TblregisterconferenceDAO.session;
+import entity.ConferenceVisible;
+import entity.MyConferenceItem;
 import entity.Tblconference;
+import entity.Tblregisterconference;
+import entity.Tbluser;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,52 +39,78 @@ public class TblConferenceDAO {
         session.close();
     }
 
-    public static List<Tblconference> all() {
+    public static ArrayList<ConferenceVisible> all() {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
 
         Query query = session.createQuery("from Tblconference");
-        if (query.list().size() < 1) {
+        ArrayList<Tblconference> listConference = (ArrayList< Tblconference>) query.list();
+        tx.commit();
+        if (listConference.size() < 1) {
             return null;
         }
-        return query.list();
+        ArrayList<ConferenceVisible> listConferenceVisible = new ArrayList<>();
+        for (int i = 0; i < listConference.size(); i++) {
+            listConferenceVisible.add(new ConferenceVisible(listConference.get(i)));
+        }
+        return (ArrayList< ConferenceVisible>) listConferenceVisible;
+    }
+
+    public static ArrayList<MyConferenceItem> allByUserID(int idUser) {
+        ArrayList<Tblregisterconference> register = TblregisterconferenceDAO.allByUser(idUser);
+        if (register == null) {
+            return null;
+        }
+        try {
+            ArrayList<MyConferenceItem> listMyConferenceItem = new ArrayList<>();
+            for (int i = 0; i < register.size(); i++) {
+                listMyConferenceItem.add(new MyConferenceItem(singleById(register.get(i).getIdConference()), register.get(i).getStatus()));
+            }
+            return (ArrayList< MyConferenceItem>) listMyConferenceItem;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Tblconference singleById(int id) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery("from Tblconference where id = '" + id + "'");
+            if (query.list().size() < 1) {
+                return null;
+            }
+            Tblconference conference = (Tblconference) query.list().get(0);
+            return conference;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            tx.commit();
+            session.close();
+        }
+
     }
     
-    public static ArrayList<Tblconference> allByUser(){
-        List<Tblconference> listConference = all();
-        ArrayList<Tblconference> listMyConference = new ArrayList<>();
-        for (int i=0; i<listConference.size(); i++){
-            String[] arrPar = listConference.get(i).getParticipant().split(",");
-            if(Helper.checkInclude(GlobalData.currentUser.getId() + "", arrPar)){
-                listMyConference.add(listConference.get(i));
+    public static ConferenceVisible singleByIdConAndIDUser(int idCon, int idUser) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery("from Tblconference where id = '" + idCon + "'");
+            if (query.list().size() < 1) {
+                return null;
             }
+            Tblconference conference = (Tblconference) query.list().get(0);
+            return new ConferenceVisible(conference);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            tx.commit();
+            session.close();
         }
-        return listMyConference;
+
     }
 
-    public static void register(int id, String dataQuery) {
-        session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        String hql = "UPDATE Tblconference set participant = :participant "  + 
-             "WHERE id = :conference_id";
-        Query query = session.createQuery(hql);
-        query.setParameter("participant", dataQuery);
-        query.setParameter("conference_id", id);
-        query.executeUpdate();
-        session.getTransaction().commit();
-        session.close();
-    }
-
-    public static void unRegister(int id, String dataQuery) {
-        session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        String hql = "UPDATE Tblconference set participant = :participant "  + 
-             "WHERE id = :conference_id";
-        Query query = session.createQuery(hql);
-        query.setParameter("participant", dataQuery);
-        query.setParameter("conference_id", id);
-        query.executeUpdate();
-        tx1.commit();
-        session.close();
-    }
 }

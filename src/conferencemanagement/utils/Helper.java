@@ -5,18 +5,21 @@
  */
 package conferencemanagement.utils;
 
+import entity.ConferenceVisible;
+import entity.Tblregisterconference;
+import java.util.ArrayList;
+
 /**
  *
  * @author Hoang IT
  */
 public class Helper {
-    public static boolean checkInclude(String str, String [] arrStr){
-        for (String element : arrStr) 
-        {
-            if (element.equals(str)) {
-                return true;
+    public static int checkInclude(ArrayList<Tblregisterconference> listConference){
+        for(int i=0; i<listConference.size();i++){
+            if(GlobalData.currentUser.getId() == listConference.get(i).getIdUser()){
+                return listConference.get(i).getStatus();
             }
         }
-        return false;
+        return 0;
     }
 }

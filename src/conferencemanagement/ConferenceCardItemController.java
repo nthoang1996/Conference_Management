@@ -7,6 +7,7 @@ package conferencemanagement;
 
 import com.sun.imageio.plugins.common.I18N;
 import conferencemanagement.utils.GlobalData;
+import entity.ConferenceVisible;
 import entity.Tblconference;
 import java.io.IOException;
 import java.net.URL;
@@ -40,7 +41,7 @@ public class ConferenceCardItemController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    Tblconference conferenceItem;
+    ConferenceVisible conferenceItem;
     
     @FXML
     private ImageView imgAvatar;
@@ -86,19 +87,18 @@ public class ConferenceCardItemController implements Initializable {
             lblStarttTime.setText("Start time: " + format.format(calStart.getTime()));
             lblTakeTime.setText("End time: " + format.format(calEnd.getTime()));
             lblLimit.setText("Limit: " + this.conferenceItem.getLimit());
-            if(this.conferenceItem.getParticipant().equals("")){
-                lblNumRegis.setText("Number registed: 0");
+            if(this.conferenceItem.getRegister()==null){
+                lblNumRegis.setText("Number registed:0");
             }
             else{
-                String [] numRegister = this.conferenceItem.getParticipant().split(",");
-                lblNumRegis.setText("Number registed: " + (numRegister.length));
+                lblNumRegis.setText("Number registed:" + this.conferenceItem.getRegister().size());
             }
             lblAddress.setText("Address: " + this.conferenceItem.getAddress());
             lblOverview.setText("Overview: "+ this.conferenceItem.getOverview());
         });
     }    
     
-    public void setConference(Tblconference conference){
+    public void setConference(ConferenceVisible conference){
         this.conferenceItem = conference;
     }
     

@@ -6,6 +6,7 @@
 package conferencemanagement;
 
 import conferencemanagement.utils.GlobalData;
+import entity.ConferenceVisible;
 import entity.Tblconference;
 import java.io.IOException;
 import java.net.URL;
@@ -37,7 +38,7 @@ import javafx.stage.Stage;
  *
  * @author Hoang IT
  */
-public class ConferenceItemController extends ListCell<Tblconference>{
+public class ConferenceItemController extends ListCell<ConferenceVisible>{
 
     /**
      * Initializes the controller class.
@@ -72,10 +73,10 @@ public class ConferenceItemController extends ListCell<Tblconference>{
     
     private FXMLLoader mLLoader;
     
-    private Tblconference conference;
+    private ConferenceVisible conference;
     
     @Override
-    protected void updateItem(Tblconference conference, boolean empty) {
+    protected void updateItem(ConferenceVisible conference, boolean empty) {
         super.updateItem(conference, empty);
         this.conference = conference;
 
@@ -112,12 +113,11 @@ public class ConferenceItemController extends ListCell<Tblconference>{
             lblStarttTime.setText("Start time: " + format.format(calStart.getTime()));
             lblTakeTime.setText("End time: " + format.format(calEnd.getTime()));
             lblLimit.setText("Limit: " + conference.getLimit());
-            if(conference.getParticipant().equals("")){
+            if(conference.getRegister() == null){
                 lblNumRegis.setText("Number registed: 0");
             }
             else{
-                String [] numRegister = conference.getParticipant().split(",");
-                lblNumRegis.setText("Number registed: " + (numRegister.length));
+                lblNumRegis.setText("Number registed: "+ conference.getRegister().size());
             }
             lblAddress.setText("Address: " + conference.getAddress());
             lblOverview.setText("Overview: "+ conference.getOverview());

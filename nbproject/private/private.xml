@@ -4,23 +4,36 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/SignInDialogController.java</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ProfilePageController.java</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/dao/TblUserDAO.java</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceCardItemController.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/hibernate.reveng1.xml</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/hibernate.reveng.xml</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/entity/Tblconference.hbm.xml</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/entity/Tblconference.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/MyConference.fxml</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/dao/TblConferenceDAO.java</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/SignInDialog.fxml</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ProfilePage.fxml</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/UserManagment.fxml</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/SignUpDialogController.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/entity/Tbluser.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/utils/Config.java</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceItemController.java</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceManagement.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/entity/MyConferenceItem.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceDetailController.java</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/utils/Helper.java</file>
-            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/MyConferenceController.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/entity/ConferenceVisible.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/UserManagmentController.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/FXMLDocument.fxml</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/FXMLDocumentController.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ProfilePageController.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/dao/TblregisterconferenceDAO.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/dao/TblUserDAO.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/hibernate.reveng.xml</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/entity/Tblregisterconference.hbm.xml</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceCardItemController.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/dao/TblConferenceDAO.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/SignInDialog.fxml</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceItemController.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceManagement.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/utils/Helper.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/hibernate.cfg.xml</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceDetail.fxml</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/MyConferenceController.java</file>
         </group>
     </open-files>
 </project-private>

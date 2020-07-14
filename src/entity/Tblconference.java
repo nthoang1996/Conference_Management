@@ -1,5 +1,5 @@
 package entity;
-// Generated Jun 29, 2020 6:00:56 PM by Hibernate Tools 4.3.1
+// Generated Jul 13, 2020 1:29:27 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -10,26 +10,24 @@ import java.util.Date;
 public class Tblconference  implements java.io.Serializable {
 
 
-     private Integer id;
-     private String name;
-     private String overview;
-     private String description;
-     private String address;
-     private int limit;
-     private String participant;
-     private Date startTime;
-     private Date endTime;
+     protected Integer id;
+     protected String name;
+     protected String overview;
+     protected String description;
+     protected String address;
+     protected int limit;
+     protected Date startTime;
+     protected Date endTime;
 
     public Tblconference() {
     }
 
-    public Tblconference(String name, String overview, String description, String address, int limit, String participant, Date startTime, Date endTime) {
+    public Tblconference(String name, String overview, String description, String address, int limit, Date startTime, Date endTime) {
        this.name = name;
        this.overview = overview;
        this.description = description;
        this.address = address;
        this.limit = limit;
-       this.participant = participant;
        this.startTime = startTime;
        this.endTime = endTime;
     }
@@ -76,13 +74,6 @@ public class Tblconference  implements java.io.Serializable {
     public void setLimit(int limit) {
         this.limit = limit;
     }
-    public String getParticipant() {
-        return this.participant;
-    }
-    
-    public void setParticipant(String participant) {
-        this.participant = participant;
-    }
     public Date getStartTime() {
         return this.startTime;
     }
@@ -97,6 +88,10 @@ public class Tblconference  implements java.io.Serializable {
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
+
+
+
+
 }
 
 

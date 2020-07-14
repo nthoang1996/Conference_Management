@@ -43,4 +43,5 @@ Contributor(s):
   <schema-selection match-catalog="conference_management"/>
   <table-filter match-name="tblconference"/>
   <table-filter match-name="tbluser"/>
+  <table-filter match-name="tblregisterconference"/>
 </hibernate-reverse-engineering>

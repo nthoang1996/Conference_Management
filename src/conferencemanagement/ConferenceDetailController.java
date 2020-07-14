@@ -8,6 +8,8 @@ package conferencemanagement;
 import conferencemanagement.utils.GlobalData;
 import conferencemanagement.utils.Helper;
 import dao.TblConferenceDAO;
+import dao.TblregisterconferenceDAO;
+import entity.ConferenceVisible;
 import entity.Tblconference;
 import entity.Tbluser;
 import java.io.IOException;
@@ -79,7 +81,7 @@ public class ConferenceDetailController implements Initializable {
     @FXML
     private Button btnCancle;
 
-    Tblconference conferenceItem;
+    ConferenceVisible conferenceItem;
     Tbluser currentUser;
     int type;
 
@@ -100,13 +102,11 @@ public class ConferenceDetailController implements Initializable {
             lblStartTime.setText(format.format(calStart.getTime()));
             lblEndtime.setText(format.format(calEnd.getTime()));
             lblLimit.setText(this.conferenceItem.getLimit() + "");
-            String[] numRegister = this.conferenceItem.getParticipant().split(",");
-            if (this.conferenceItem.getParticipant().equals("")) {
+            if (this.conferenceItem.getRegister() == null) {
                 lblNumRegis.setText("0");
             } else {
-                lblNumRegis.setText((numRegister.length) + "");
+                lblNumRegis.setText(this.conferenceItem.getRegister().size() + "");
             }
-
             lblAddress.setText(this.conferenceItem.getAddress());
             txtAreaDescription.setText(this.conferenceItem.getDescription());
             if (this.currentUser == null) {
@@ -114,18 +114,9 @@ public class ConferenceDetailController implements Initializable {
                 lblNotify.setText("(*)You must Sign in to be able to Register this conference");
                 btnSignIn.setVisible(true);
             } else {
-                String idString = this.currentUser.getId() + "";
                 btnSignIn.setVisible(false);
                 btnRegister.setVisible(true);
-                if (Helper.checkInclude(idString, numRegister)) {
-                    btnRegister.setText("Cancel Registration");
-                    lblNotify.setText("(*)You have already register this conference!");
-                    type = 2;
-                } else {
-                    btnRegister.setText("Registration");
-                    type = 1;
-                    lblNotify.setText("");
-                }
+                reload();
             }
         });
     }
@@ -142,21 +133,9 @@ public class ConferenceDetailController implements Initializable {
             stage.setScene(scene);
             stage.showAndWait();
             this.currentUser = GlobalData.currentUser;
-            String[] numRegister = this.conferenceItem.getParticipant().split(",");
-            String idString = this.currentUser.getId() + "";
             btnSignIn.setVisible(false);
             btnRegister.setVisible(true);
-            lblNotify.setText("");
-            if (Helper.checkInclude(idString, numRegister)) {
-                btnRegister.setText("Cancel Registration");
-                type = 2;
-                lblNotify.setText("(*)You have already register this conference!");
-            } else {
-                btnRegister.setText("Registration");
-                type = 1;
-                lblNotify.setText("");
-            }
-
+            reload();
         } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -165,8 +144,19 @@ public class ConferenceDetailController implements Initializable {
     @FXML
     private void DoRegister(MouseEvent event) {
         if (type == 1) {
-            String dataQuery = this.conferenceItem.getParticipant() + GlobalData.currentUser.getId() + ",";
-            TblConferenceDAO.register(this.conferenceItem.getId(), dataQuery);
+            if (TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()) != null && TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()).size() >= this.conferenceItem.getLimit()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Registration Error");
+                alert.setHeaderText("Registration error");
+                alert.setContentText("The participant has reached the limit");
+                alert.showAndWait();
+                return;
+            }
+            if (TblregisterconferenceDAO.singleByConferenceAndUser(this.conferenceItem.getId(), GlobalData.currentUser.getId()) == null) {
+                TblregisterconferenceDAO.insert(this.conferenceItem.getId(), GlobalData.currentUser.getId());
+            } else {
+                TblregisterconferenceDAO.updateStatus(this.conferenceItem.getId(), GlobalData.currentUser.getId(), 1);
+            }
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Registration success");
             alert.setHeaderText("Registration success");
@@ -175,42 +165,17 @@ public class ConferenceDetailController implements Initializable {
             btnRegister.setText("Cancel Registration");
             type = 2;
             lblNotify.setText("(*)You have already register this conference!");
-            this.conferenceItem.setParticipant(dataQuery);
-            String[] numRegister = this.conferenceItem.getParticipant().split(",");
-            if (this.conferenceItem.getParticipant().equals("")) {
-                lblNumRegis.setText("0");
-            } else {
-                lblNumRegis.setText((numRegister.length) + "");
-            }
+            this.conferenceItem.setRegister(TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()));
+            reload();
         } else {
-            String[] arrStr = this.conferenceItem.getParticipant().split(",");
-            ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(arrStr));
-            arrayList.remove(GlobalData.currentUser.getId() + "");
-            StringBuilder sbString = new StringBuilder("");
-
-            //iterate through ArrayList
-            for (String participant : arrayList) {
-                sbString.append(participant).append(",");
-            }
-
-            //convert StringBuffer to String
-            String strList = sbString.toString();
-            TblConferenceDAO.unRegister(this.conferenceItem.getId(), strList);
+            TblregisterconferenceDAO.updateStatus(this.conferenceItem.getId(), GlobalData.currentUser.getId(), 0);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Cancel registration success");
             alert.setHeaderText("Cancel registration success");
             alert.setContentText("You have canceled register for this conference!");
             alert.showAndWait();
-            this.conferenceItem.setParticipant(strList);
-            String[] numRegister = this.conferenceItem.getParticipant().split(",");
-            if (this.conferenceItem.getParticipant().equals("")) {
-                lblNumRegis.setText("0");
-            } else {
-                lblNumRegis.setText((numRegister.length) + "");
-            }
-            btnRegister.setText("Registration");
-            type = 1;
-            lblNotify.setText("");
+            this.conferenceItem.setRegister(TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()));
+            reload();
         }
         GlobalData.mainController.reloadContainer();
     }
@@ -221,9 +186,46 @@ public class ConferenceDetailController implements Initializable {
         stage.close();
     }
 
-    public void setConference(Tblconference conference, Tbluser currentUser) {
+    public void setConference(ConferenceVisible conference, Tbluser currentUser) {
         this.conferenceItem = conference;
         this.currentUser = currentUser;
+    }
+
+    public void reload() {
+        if (this.conferenceItem.getRegister() == null) {
+            btnRegister.setText("Registration");
+            type = 1;
+            lblNotify.setText("");
+        } else {
+            switch (Helper.checkInclude(this.conferenceItem.getRegister())) {
+                case 0:
+                    btnRegister.setText("Registration");
+                    type = 1;
+                    lblNotify.setText("");
+                    break;
+                case 1:
+                    btnRegister.setText("Cancel Registration");
+                    lblNotify.setText("(*)You have already register this conference! The request is waiting for aprroved.");
+                    type = 2;
+                    break;
+                case 2:
+                    btnRegister.setText("Cancel Registration");
+                    lblNotify.setText("(*)You have already register this conference! Admin has accepted your request.");
+                    type = 2;
+                    break;
+                case 3:
+                    btnRegister.setText("Registration");
+                    btnRegister.setDisable(true);
+                    lblNotify.setText("(*)You have already register this conference! Admin has denied your request.");
+                    type = 1;
+                    break;
+            }
+        }
+        if (this.conferenceItem.getRegister() == null) {
+            lblNumRegis.setText("0");
+        } else {
+            lblNumRegis.setText(this.conferenceItem.getRegister().size() + "");
+        }
     }
 
 }

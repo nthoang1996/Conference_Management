@@ -8,12 +8,14 @@ package conferencemanagement;
 import conferencemanagement.utils.Config;
 import conferencemanagement.utils.GlobalData;
 import dao.TblConferenceDAO;
+import entity.ConferenceVisible;
 import entity.Tblconference;
 import java.awt.Dimension;
 import java.awt.Scrollbar;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -65,9 +67,9 @@ public class FXMLDocumentController implements Initializable {
     private AnchorPane apContainer;
 
     @FXML
-    private ListView<Tblconference> lvConference;
+    private ListView<ConferenceVisible> lvConference;
 
-    private ObservableList<Tblconference> conferenceObservableList;
+    private ObservableList<ConferenceVisible> conferenceObservableList;
 
     final ToggleGroup groupType = new ToggleGroup();
 
@@ -85,6 +87,9 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private Button btnMyConference;
+    
+    @FXML
+    private Button btnManageUser;
 
     @FXML
     private void ToHome(MouseEvent event) {
@@ -103,6 +108,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void MyConference(MouseEvent event) {
         loadPage("MyConference");
+    }
+    
+    @FXML
+    private void ManageUser(MouseEvent event) {
+        loadPage("UserManagment");
     }
 
     @FXML
@@ -135,6 +145,9 @@ public class FXMLDocumentController implements Initializable {
             btnProfile.setVisible(true);
             btnMyConference.setVisible(true);
         }
+        else if(GlobalData.currentUser.getRoleId() == 2){
+            btnManageUser.setVisible(true);
+        }
     }
 
     @Override
@@ -145,9 +158,9 @@ public class FXMLDocumentController implements Initializable {
         GridPane gpConference = new GridPane();
         lblCurrentUser.setVisible(false);
         lvConference.setItems(conferenceObservableList);
-        lvConference.setCellFactory(new Callback<ListView<Tblconference>, ListCell<Tblconference>>() {
+        lvConference.setCellFactory(new Callback<ListView<ConferenceVisible>, ListCell<ConferenceVisible>>() {
             @Override
-            public ListCell<Tblconference> call(ListView<Tblconference> studentListView) {
+            public ListCell<ConferenceVisible> call(ListView<ConferenceVisible> studentListView) {
                 return new ConferenceItemController();
             }
         });
@@ -196,7 +209,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public FXMLDocumentController() {
-        List<Tblconference> listConference = TblConferenceDAO.all();
+        List<ConferenceVisible> listConference = TblConferenceDAO.all();
         conferenceObservableList = FXCollections.observableArrayList(listConference);
     }
 
@@ -221,13 +234,13 @@ public class FXMLDocumentController implements Initializable {
     }
     
     public void reloadContainer(){
-        List<Tblconference> listConference = TblConferenceDAO.all();
+        ArrayList<ConferenceVisible> listConference = (ArrayList < ConferenceVisible >)TblConferenceDAO.all();
         conferenceObservableList = FXCollections.observableArrayList(listConference);
         GridPane gpConference = new GridPane();
         lvConference.setItems(conferenceObservableList);
-        lvConference.setCellFactory(new Callback<ListView<Tblconference>, ListCell<Tblconference>>() {
+        lvConference.setCellFactory(new Callback<ListView<ConferenceVisible>, ListCell<ConferenceVisible>>() {
             @Override
-            public ListCell<Tblconference> call(ListView<Tblconference> studentListView) {
+            public ListCell<ConferenceVisible> call(ListView<ConferenceVisible> studentListView) {
                 return new ConferenceItemController();
             }
         });
