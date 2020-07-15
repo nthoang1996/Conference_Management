@@ -47,7 +47,7 @@ public class TblConferenceDAO {
         ArrayList<Tblconference> listConference = (ArrayList< Tblconference>) query.list();
         tx.commit();
         if (listConference.size() < 1) {
-            return null;
+            return new ArrayList<>();
         }
         ArrayList<ConferenceVisible> listConferenceVisible = new ArrayList<>();
         for (int i = 0; i < listConference.size(); i++) {
@@ -59,7 +59,7 @@ public class TblConferenceDAO {
     public static ArrayList<MyConferenceItem> allByUserID(int idUser) {
         ArrayList<Tblregisterconference> register = TblregisterconferenceDAO.allByUser(idUser);
         if (register == null) {
-            return null;
+            return new ArrayList<>();
         }
         try {
             ArrayList<MyConferenceItem> listMyConferenceItem = new ArrayList<>();
@@ -69,7 +69,7 @@ public class TblConferenceDAO {
             return (ArrayList< MyConferenceItem>) listMyConferenceItem;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new ArrayList<>();
         }
     }
 

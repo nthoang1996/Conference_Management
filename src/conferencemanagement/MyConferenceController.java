@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -40,12 +41,11 @@ public class MyConferenceController implements Initializable {
     /**
      * Initializes the controller class.
      */
-
     @FXML
     private TableView<MyConferenceItem> tblConference;
-    
+
     ObservableList<MyConferenceItem> list;
-    
+
     int check = 0;
 
     @Override
@@ -54,11 +54,9 @@ public class MyConferenceController implements Initializable {
         TableColumn<MyConferenceItem, String> IdCol //
                 = new TableColumn<MyConferenceItem, String>("ID");
 
-        // Tạo cột Email (Kiểu dữ liệu String)
         TableColumn<MyConferenceItem, String> nameCol//
                 = new TableColumn<MyConferenceItem, String>("Name");
 
-        // Tạo 2 cột con cho cột FullName
         TableColumn<MyConferenceItem, String> addressCol//
                 = new TableColumn<MyConferenceItem, String>("Address");
 
@@ -67,13 +65,13 @@ public class MyConferenceController implements Initializable {
 
         TableColumn<MyConferenceItem, String> endTimeCol //
                 = new TableColumn<MyConferenceItem, String>("End time");
-        
+
         TableColumn<MyConferenceItem, String> statusCol //
                 = new TableColumn<MyConferenceItem, String>("Status");
 
         IdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("locationName"));
         startTimeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endTimeCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -86,7 +84,7 @@ public class MyConferenceController implements Initializable {
         statusCol.prefWidthProperty().bind(tblConference.widthProperty().multiply(0.1));
 
         list = FXCollections.observableList(TblConferenceDAO.allByUserID(GlobalData.currentUser.getId()));
-        if(list ==null){
+        if (list == null) {
             tblConference.getColumns().addAll(IdCol, nameCol, addressCol, startTimeCol, endTimeCol, statusCol);
             return;
         }
@@ -94,6 +92,10 @@ public class MyConferenceController implements Initializable {
 
         tblConference.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             try {
+                if (newSelection == null) {
+                    newSelection = oldSelection;
+                    return;
+                }
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ConferenceDetail.fxml"));
                 Parent parent = fxmlLoader.load();
                 ConferenceDetailController controller = fxmlLoader.<ConferenceDetailController>getController();
@@ -102,14 +104,7 @@ public class MyConferenceController implements Initializable {
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setScene(scene);
-                if(check == 0){
-                    stage.showAndWait();
-                    check =1;
-                }
-                else{
-                    check = 0;
-                }
-                
+                stage.showAndWait();
                 reloadTable();
             } catch (IOException ex) {
                 Logger.getLogger(ConferenceDetailController.class.getName()).log(Level.SEVERE, null, ex);
@@ -118,9 +113,15 @@ public class MyConferenceController implements Initializable {
 
         tblConference.getColumns().addAll(IdCol, nameCol, addressCol, startTimeCol, endTimeCol, statusCol);
     }
-    
-    public void reloadTable(){
-        list.setAll(FXCollections.observableList(TblConferenceDAO.allByUserID(GlobalData.currentUser.getId())));
-        tblConference.setItems(list);
+
+    public void reloadTable() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                list.setAll(FXCollections.observableList(TblConferenceDAO.allByUserID(GlobalData.currentUser.getId())));
+                tblConference.setItems(list);
+            }
+        });
+
     }
 }

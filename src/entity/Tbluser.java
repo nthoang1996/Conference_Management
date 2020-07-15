@@ -1,5 +1,5 @@
 package entity;
-// Generated Jul 13, 2020 1:29:27 PM by Hibernate Tools 4.3.1
+// Generated Jul 15, 2020 11:08:41 AM by Hibernate Tools 4.3.1
 
 
 
@@ -9,23 +9,25 @@ package entity;
 public class Tbluser  implements java.io.Serializable {
 
 
-     private Integer id;
-     private String name;
-     private String email;
-     private String username;
-     private String password;
-     private int roleId;
-     private boolean isDeleted;
+     protected Integer id;
+     protected String name;
+     protected String email;
+     protected String username;
+     protected String password;
+     protected int roleId;
+     protected boolean isDisabled;
+     protected boolean isDeleted;
 
     public Tbluser() {
     }
 
-    public Tbluser(String name, String email, String username, String password, int roleId, boolean isDeleted) {
+    public Tbluser(String name, String email, String username, String password, int roleId, boolean isDisabled, boolean isDeleted) {
        this.name = name;
        this.email = email;
        this.username = username;
        this.password = password;
        this.roleId = roleId;
+       this.isDisabled = isDisabled;
        this.isDeleted = isDeleted;
     }
    
@@ -70,6 +72,13 @@ public class Tbluser  implements java.io.Serializable {
     
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+    public boolean isIsDisabled() {
+        return this.isDisabled;
+    }
+    
+    public void setIsDisabled(boolean isDisabled) {
+        this.isDisabled = isDisabled;
     }
     public boolean isIsDeleted() {
         return this.isDeleted;

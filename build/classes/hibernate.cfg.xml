@@ -44,6 +44,7 @@ Contributor(s):
     <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/conference_management?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC</property>
     <property name="hibernate.connection.username">root</property>
+    <mapping resource="entity/Tbllocation.hbm.xml"/>
     <mapping resource="entity/Tbluser.hbm.xml"/>
     <mapping resource="entity/Tblconference.hbm.xml"/>
     <mapping resource="entity/Tblregisterconference.hbm.xml"/>

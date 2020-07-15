@@ -112,14 +112,14 @@ public class ConferenceItemController extends ListCell<ConferenceVisible>{
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             lblStarttTime.setText("Start time: " + format.format(calStart.getTime()));
             lblTakeTime.setText("End time: " + format.format(calEnd.getTime()));
-            lblLimit.setText("Limit: " + conference.getLimit());
+            lblLimit.setText("Limit: " + conference.getLocationLimit());
             if(conference.getRegister() == null){
                 lblNumRegis.setText("Number registed: 0");
             }
             else{
                 lblNumRegis.setText("Number registed: "+ conference.getRegister().size());
             }
-            lblAddress.setText("Address: " + conference.getAddress());
+            lblAddress.setText("Address: " + conference.getLocationName());
             lblOverview.setText("Overview: "+ conference.getOverview());
 
 

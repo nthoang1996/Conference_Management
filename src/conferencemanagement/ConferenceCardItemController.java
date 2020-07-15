@@ -86,14 +86,14 @@ public class ConferenceCardItemController implements Initializable {
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             lblStarttTime.setText("Start time: " + format.format(calStart.getTime()));
             lblTakeTime.setText("End time: " + format.format(calEnd.getTime()));
-            lblLimit.setText("Limit: " + this.conferenceItem.getLimit());
+            lblLimit.setText("Limit: " + this.conferenceItem.getLocationLimit());
             if(this.conferenceItem.getRegister()==null){
                 lblNumRegis.setText("Number registed:0");
             }
             else{
                 lblNumRegis.setText("Number registed:" + this.conferenceItem.getRegister().size());
             }
-            lblAddress.setText("Address: " + this.conferenceItem.getAddress());
+            lblAddress.setText("Address: " + this.conferenceItem.getLocationName());
             lblOverview.setText("Overview: "+ this.conferenceItem.getOverview());
         });
     }    

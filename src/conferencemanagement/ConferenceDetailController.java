@@ -101,13 +101,13 @@ public class ConferenceDetailController implements Initializable {
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             lblStartTime.setText(format.format(calStart.getTime()));
             lblEndtime.setText(format.format(calEnd.getTime()));
-            lblLimit.setText(this.conferenceItem.getLimit() + "");
+            lblLimit.setText(this.conferenceItem.getLocationLimit() + "");
             if (this.conferenceItem.getRegister() == null) {
                 lblNumRegis.setText("0");
             } else {
                 lblNumRegis.setText(this.conferenceItem.getRegister().size() + "");
             }
-            lblAddress.setText(this.conferenceItem.getAddress());
+            lblAddress.setText(this.conferenceItem.getLocationName());
             txtAreaDescription.setText(this.conferenceItem.getDescription());
             if (this.currentUser == null) {
                 btnRegister.setVisible(false);
@@ -144,7 +144,7 @@ public class ConferenceDetailController implements Initializable {
     @FXML
     private void DoRegister(MouseEvent event) {
         if (type == 1) {
-            if (TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()) != null && TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()).size() >= this.conferenceItem.getLimit()) {
+            if (TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()) != null && TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()).size() >= this.conferenceItem.getLocationLimit()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Registration Error");
                 alert.setHeaderText("Registration error");

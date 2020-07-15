@@ -6,7 +6,11 @@
 package dao;
 
 import static dao.TblConferenceDAO.session;
+import entity.ConferenceVisible;
+import entity.Tblconference;
 import entity.Tbluser;
+import entity.UserVisible;
+import java.util.ArrayList;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,9 +22,34 @@ import org.hibernate.cfg.Configuration;
  * @author Hoang IT
  */
 public class TblUserDAO {
+
     static Session session = null;
-    
-    public static void insert(Tbluser user){
+
+    public static ArrayList<UserVisible> all() {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery("from Tbluser");
+            if (query.list().size() < 1) {
+                return null;
+            } else {
+                ArrayList<Tbluser> listUser = (ArrayList< Tbluser>) query.list();
+                ArrayList<UserVisible> listUserVisible = new ArrayList<>();
+                for (int i = 0; i < listUser.size(); i++) {
+                    listUserVisible.add(new UserVisible(listUser.get(i)));
+                }
+                return (ArrayList< UserVisible>) listUserVisible;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            tx.commit();
+            session.close();
+        }
+    }
+
+    public static void insert(Tbluser user) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         session.save(user);
@@ -28,37 +57,36 @@ public class TblUserDAO {
 //        session.flush();
         session.close();
     }
-    
-    public static Tbluser singleByUsername(String username){
+
+    public static Tbluser singleByUsername(String username) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
-        
-        Query query = session.createQuery("from Tbluser where username = '" + username +"'");
-        if(query.list().size() < 1){
+
+        Query query = session.createQuery("from Tbluser where username = '" + username + "'");
+        if (query.list().size() < 1) {
             return null;
         }
-        Tbluser user = (Tbluser)query.list().get(0);
+        Tbluser user = (Tbluser) query.list().get(0);
         session.close();
         return user;
     }
-    
-    public static void update(Tbluser user){
+
+    public static void update(Tbluser user) {
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        System.out.println("dao.TblUserDAO.update()"+ user.getPassword().equals(""));
-        System.out.println("dao.TblUserDAO.update()"+ user.getPassword());
-        if(user.getPassword().equals("")){
-            String hql = "UPDATE Tbluser set name = :name, email = :email "  + 
-             "WHERE id = :user_id";
+        System.out.println("dao.TblUserDAO.update()" + user.getPassword().equals(""));
+        System.out.println("dao.TblUserDAO.update()" + user.getPassword());
+        if (user.getPassword().equals("")) {
+            String hql = "UPDATE Tbluser set name = :name, email = :email "
+                    + "WHERE id = :user_id";
             Query query = session.createQuery(hql);
             query.setParameter("name", user.getName());
             query.setParameter("email", user.getEmail());
             query.setParameter("user_id", user.getId());
             query.executeUpdate();
-        }
-        else{
-            String hql = "UPDATE Tbluser set name = :name, email = :email, password = :password "  + 
-             "WHERE id = :user_id";
+        } else {
+            String hql = "UPDATE Tbluser set name = :name, email = :email, password = :password "
+                    + "WHERE id = :user_id";
             Query query = session.createQuery(hql);
             query.setParameter("name", user.getName());
             query.setParameter("email", user.getEmail());
@@ -68,5 +96,25 @@ public class TblUserDAO {
         }
         session.getTransaction().commit();
         session.close();
+    }
+
+    public static boolean updateStatus(int idUser, boolean status) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        try {
+            String hql = "UPDATE Tbluser set is_disabled = :status "
+                    + "WHERE id = :user_id";
+            Query query = session.createQuery(hql);
+            query.setParameter("user_id", idUser);
+            query.setParameter("status", status);
+            query.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            session.getTransaction().commit();
+            session.close();
+        }
     }
 }

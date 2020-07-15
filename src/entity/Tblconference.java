@@ -1,5 +1,5 @@
 package entity;
-// Generated Jul 13, 2020 1:29:27 PM by Hibernate Tools 4.3.1
+// Generated Jul 15, 2020 11:08:41 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -14,20 +14,18 @@ public class Tblconference  implements java.io.Serializable {
      protected String name;
      protected String overview;
      protected String description;
-     protected String address;
-     protected int limit;
+     protected int locationId;
      protected Date startTime;
      protected Date endTime;
 
     public Tblconference() {
     }
 
-    public Tblconference(String name, String overview, String description, String address, int limit, Date startTime, Date endTime) {
+    public Tblconference(String name, String overview, String description, int locationId, Date startTime, Date endTime) {
        this.name = name;
        this.overview = overview;
        this.description = description;
-       this.address = address;
-       this.limit = limit;
+       this.locationId = locationId;
        this.startTime = startTime;
        this.endTime = endTime;
     }
@@ -60,19 +58,12 @@ public class Tblconference  implements java.io.Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getAddress() {
-        return this.address;
+    public int getLocationId() {
+        return this.locationId;
     }
     
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    public int getLimit() {
-        return this.limit;
-    }
-    
-    public void setLimit(int limit) {
-        this.limit = limit;
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
     }
     public Date getStartTime() {
         return this.startTime;

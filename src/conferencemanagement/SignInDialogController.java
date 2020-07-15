@@ -90,6 +90,14 @@ public class SignInDialogController implements Initializable {
             alert.showAndWait();
             return;
         }
+        if(user.isIsDisabled()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Sign in failed");
+            alert.setHeaderText("Sign in failed");
+            alert.setContentText("Sign in failed. The account is disabled. Please contact the admin!");
+            alert.showAndWait();
+            return;
+        }
         boolean passwordMatch = PasswordUtils.verifyUserPassword(pwFieldPassword.getText(), user.getPassword(), Config.salt);
         if(passwordMatch) 
         {
