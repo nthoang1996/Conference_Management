@@ -11,16 +11,24 @@ import dao.TblUserDAO;
 import entity.ConferenceVisible;
 import entity.MyConferenceItem;
 import entity.UserVisible;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -68,26 +76,28 @@ public class ListRegisterUserController implements Initializable {
             list = FXCollections.observableList(TblUserDAO.allByConferenceId(this.conference.getId()));
             tblUser.setItems(list);
 
-//        tblConference.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-//            try {
-//                if (newSelection == null) {
-//                    newSelection = oldSelection;
-//                    return;
-//                }
-//                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ConferenceDetail.fxml"));
-//                Parent parent = fxmlLoader.load();
-//                ConferenceDetailController controller = fxmlLoader.<ConferenceDetailController>getController();
-//                controller.setConference(TblConferenceDAO.singleByIdConAndIDUser(newSelection.getId(), GlobalData.currentUser.getId()), GlobalData.currentUser);
-//                Scene scene = new Scene(parent, 600, 400);
-//                Stage stage = new Stage();
-//                stage.initModality(Modality.APPLICATION_MODAL);
-//                stage.setScene(scene);
-//                stage.showAndWait();
-//                reloadTable();
-//            } catch (IOException ex) {
-//                Logger.getLogger(ConferenceDetailController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        });
+            tblUser.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                try {
+                    if (newSelection == null) {
+                        newSelection = oldSelection;
+                        return;
+                    }
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ConferenceByUser.fxml"));
+                    Parent parent = fxmlLoader.load();
+                    ConferenceByUserController controller = fxmlLoader.<ConferenceByUserController>getController();
+                    UserVisible item = (UserVisible) newSelection;
+                    controller.setConference(conference);
+                    controller.setUser(item);
+                    Scene scene = new Scene(parent, 600, 400);
+                    Stage stage = new Stage();
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.setScene(scene);
+                    stage.showAndWait();
+                    reloadTable();
+                } catch (IOException ex) {
+                    Logger.getLogger(ConferenceDetailController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
             tblUser.getColumns().addAll(IdCol, nameCol, emailCol, usernameCol);
         });
     }

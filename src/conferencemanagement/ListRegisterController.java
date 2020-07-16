@@ -30,6 +30,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jdk.nashorn.internal.objects.Global;
 
 /**
  * FXML Controller class
@@ -87,26 +88,28 @@ public class ListRegisterController implements Initializable {
             list = FXCollections.observableList(TblConferenceDAO.allByUserID(this.userVisible.getId()));
             tblConference.setItems(list);
 
-//        tblConference.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-//            try {
-//                if (newSelection == null) {
-//                    newSelection = oldSelection;
-//                    return;
-//                }
-//                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ConferenceDetail.fxml"));
-//                Parent parent = fxmlLoader.load();
-//                ConferenceDetailController controller = fxmlLoader.<ConferenceDetailController>getController();
-//                controller.setConference(TblConferenceDAO.singleByIdConAndIDUser(newSelection.getId(), GlobalData.currentUser.getId()), GlobalData.currentUser);
-//                Scene scene = new Scene(parent, 600, 400);
-//                Stage stage = new Stage();
-//                stage.initModality(Modality.APPLICATION_MODAL);
-//                stage.setScene(scene);
-//                stage.showAndWait();
-//                reloadTable();
-//            } catch (IOException ex) {
-//                Logger.getLogger(ConferenceDetailController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        });
+            tblConference.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                try {
+                    if (newSelection == null) {
+                        newSelection = oldSelection;
+                        return;
+                    }
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ConferenceByUser.fxml"));
+                    Parent parent = fxmlLoader.load();
+                    ConferenceByUserController controller = fxmlLoader.<ConferenceByUserController>getController();
+                    MyConferenceItem item = (MyConferenceItem) newSelection;
+                    controller.setConference(TblConferenceDAO.singleByIdConAndIDUser(item.getId(), this.userVisible.getId()));
+                    controller.setUser(this.userVisible);
+                    Scene scene = new Scene(parent, 600, 400);
+                    Stage stage = new Stage();
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.setScene(scene);
+                    stage.showAndWait();
+                    reloadTable();
+                } catch (IOException ex) {
+                    Logger.getLogger(ConferenceDetailController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
             tblConference.getColumns().addAll(IdCol, nameCol, addressCol, startTimeCol, endTimeCol, statusCol);
         });
     }
@@ -117,10 +120,10 @@ public class ListRegisterController implements Initializable {
 
     public void reloadTable() {
         Platform.runLater(() -> {
-            list = FXCollections.observableList(TblConferenceDAO.allByUserID(this.userVisible.getId()));
+            list.setAll(FXCollections.observableList(TblConferenceDAO.allByUserID(this.userVisible.getId())));
+            list.setAll(FXCollections.observableList(TblConferenceDAO.allByUserID(this.userVisible.getId())));
             tblConference.setItems(list);
         });
-
     }
 
 }

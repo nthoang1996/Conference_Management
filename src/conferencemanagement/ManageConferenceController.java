@@ -80,7 +80,7 @@ public class ManageConferenceController implements Initializable {
         startTimeCol.prefWidthProperty().bind(tblConference.widthProperty().multiply(0.15));
         endTimeCol.prefWidthProperty().bind(tblConference.widthProperty().multiply(0.15));
 
-        list = FXCollections.observableList(TblConferenceDAO.all());
+        list = FXCollections.observableList(TblConferenceDAO.allIncludeDeny());
         tblConference.setItems(list);
 
         listener = (obs, oldSelection, newSelection) -> {

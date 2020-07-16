@@ -7,6 +7,7 @@ package conferencemanagement.utils;
 
 import conferencemanagement.FXMLDocumentController;
 import entity.Tbluser;
+import entity.UserVisible;
 
 /**
  *

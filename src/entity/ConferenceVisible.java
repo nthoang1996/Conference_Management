@@ -57,6 +57,20 @@ public class ConferenceVisible extends Tblconference{
         this.locationLimit = myLocation.getMyLimit();
     }
     
+    public ConferenceVisible(Tblconference conference, boolean admin){
+        this.id = conference.getId();
+        this.name = conference.getName();
+        this.overview = conference.getOverview();
+        this.description = conference.getDescription();
+        this.locationId = conference.getLocationId();
+        this.startTime = conference.getStartTime();
+        this.endTime = conference.getEndTime();
+        this.register = TblregisterconferenceDAO.allByConferenceIncludeDeny(this.id);
+        Tbllocation myLocation = TblLocationDAO.singleById(this.locationId);
+        this.locationName = myLocation.getName();
+        this.locationLimit = myLocation.getMyLimit();
+    }
+    
     public ConferenceVisible(Tblregisterconference register){
         
     }

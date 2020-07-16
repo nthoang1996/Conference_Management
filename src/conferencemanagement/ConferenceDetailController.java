@@ -145,7 +145,7 @@ public class ConferenceDetailController implements Initializable {
     private void DoRegister(MouseEvent event) {
         if (type == 1) {
             if (TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()) != null && TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()).size() >= this.conferenceItem.getLocationLimit()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Registration Error");
                 alert.setHeaderText("Registration error");
                 alert.setContentText("The participant has reached the limit");

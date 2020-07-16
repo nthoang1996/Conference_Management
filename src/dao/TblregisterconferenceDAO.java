@@ -25,6 +25,26 @@ public class TblregisterconferenceDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         try {
+            Query query = session.createQuery("from Tblregisterconference where id_conference = '" + idCon + "' and status <> 0 and status <> 3");
+            if (query.list().size() < 1) {
+                return new ArrayList<>();
+            }
+            ArrayList<Tblregisterconference> list = (ArrayList<Tblregisterconference>) query.list();
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+        finally{
+            tx.commit();
+            session.close();
+        }
+    }
+    
+    public static ArrayList<Tblregisterconference> allByConferenceIncludeDeny(int idCon) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        try {
             Query query = session.createQuery("from Tblregisterconference where id_conference = '" + idCon + "' and status <> 0");
             if (query.list().size() < 1) {
                 return new ArrayList<>();
