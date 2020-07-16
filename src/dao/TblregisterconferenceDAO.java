@@ -24,16 +24,23 @@ public class TblregisterconferenceDAO {
     public static ArrayList<Tblregisterconference> allByConference(int idCon) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
-
-        Query query = session.createQuery("from Tblregisterconference where id_conference = '" + idCon + "' and status <> 0");
-        if (query.list().size() < 1) {
-            return null;
+        try {
+            Query query = session.createQuery("from Tblregisterconference where id_conference = '" + idCon + "' and status <> 0");
+            if (query.list().size() < 1) {
+                return new ArrayList<>();
+            }
+            ArrayList<Tblregisterconference> list = (ArrayList<Tblregisterconference>) query.list();
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         }
-        ArrayList<Tblregisterconference> list = (ArrayList<Tblregisterconference>) query.list();
-        session.close();
-        return list;
+        finally{
+            tx.commit();
+            session.close();
+        }
     }
-    
+
     public static ArrayList<Tblregisterconference> allByUser(int idUser) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();

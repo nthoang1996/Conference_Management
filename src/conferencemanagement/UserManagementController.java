@@ -13,12 +13,18 @@ import entity.Tbluser;
 import entity.UserVisible;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -85,11 +91,7 @@ public class UserManagementController implements Initializable {
         roleNameCol.prefWidthProperty().bind(tblUserVisible.widthProperty().multiply(0.15));
         statusCol.prefWidthProperty().bind(tblUserVisible.widthProperty().multiply(0.1));
 
-        list = FXCollections.observableList(TblUserDAO.all());
-        if (list == null) {
-            tblUserVisible.getColumns().addAll(IdCol, nameCol, emailCol, usernameCol, roleNameCol, statusCol);
-            return;
-        }
+        list = FXCollections.observableList(TblUserDAO.allMember());
         tblUserVisible.setItems(list);
 
         listener = (obs, oldSelection, newSelection) -> {
@@ -122,7 +124,7 @@ public class UserManagementController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                list = FXCollections.observableList(TblUserDAO.all());
+                list = FXCollections.observableList(TblUserDAO.allMember());
                 tblUserVisible.setItems(list);
             }
         });

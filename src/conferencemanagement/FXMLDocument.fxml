@@ -61,6 +61,11 @@
                         <Font size="25.0" />
                      </font>
                   </Button>
+                  <Button fx:id="btnManageConference" layoutX="10.0" layoutY="253.0" mnemonicParsing="false" onMouseClicked="#ManageConference" prefHeight="81.0" prefWidth="201.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Conference" textFill="#f2f2f2">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Button>
                </children>
             </VBox>
          </left>

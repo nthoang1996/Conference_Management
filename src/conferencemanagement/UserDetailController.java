@@ -114,7 +114,7 @@ public class UserDetailController implements Initializable {
             Parent parent = fXMLLoader.load();
             ListRegisterController listRegisterDialogController = fXMLLoader.<ListRegisterController>getController();
             listRegisterDialogController.setUser(this.user);
-            Scene scene = new Scene(parent, 1020, 720);
+            Scene scene = new Scene(parent, 1000, 700);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);

@@ -92,6 +92,9 @@ public class FXMLDocumentController implements Initializable {
     private Button btnManageUser;
     
     @FXML
+    private Button btnManageConference;
+    
+    @FXML
     private VBox vBSideBar;
 
     @FXML
@@ -116,6 +119,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void ManageUser(MouseEvent event) {
         loadPage("UserManagement");
+    }
+    
+    @FXML
+    private void ManageConference(MouseEvent event) {
+        loadPage("ManageConference");
     }
 
     @FXML
@@ -144,6 +152,7 @@ public class FXMLDocumentController implements Initializable {
             btnProfile.setVisible(false);
             btnMyConference.setVisible(false);
             btnManageUser.setVisible(false);
+            btnManageConference.setVisible(false);
         }
         else if(GlobalData.currentUser.getRoleId() == 1){
             btnProfile.setVisible(true);
@@ -151,6 +160,7 @@ public class FXMLDocumentController implements Initializable {
         }
         else if(GlobalData.currentUser.getRoleId() == 2){
             btnManageUser.setVisible(true);
+            btnManageConference.setVisible(true);
             vBSideBar.getChildren().remove(btnProfile);
             vBSideBar.getChildren().remove(btnMyConference);
         }

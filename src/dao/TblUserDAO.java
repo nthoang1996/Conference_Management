@@ -8,6 +8,7 @@ package dao;
 import static dao.TblConferenceDAO.session;
 import entity.ConferenceVisible;
 import entity.Tblconference;
+import entity.Tblregisterconference;
 import entity.Tbluser;
 import entity.UserVisible;
 import java.util.ArrayList;
@@ -25,13 +26,13 @@ public class TblUserDAO {
 
     static Session session = null;
 
-    public static ArrayList<UserVisible> all() {
+    public static ArrayList<UserVisible> allMember() {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         try {
-            Query query = session.createQuery("from Tbluser");
+            Query query = session.createQuery("from Tbluser where role_id = 1 and is_deleted = false");
             if (query.list().size() < 1) {
-                return null;
+                return new ArrayList<>();
             } else {
                 ArrayList<Tbluser> listUser = (ArrayList< Tbluser>) query.list();
                 ArrayList<UserVisible> listUserVisible = new ArrayList<>();
@@ -42,7 +43,26 @@ public class TblUserDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new ArrayList<>();
+        } finally {
+            tx.commit();
+            session.close();
+        }
+    }
+
+    public static ArrayList<UserVisible> allByConferenceId(int idCon) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            ArrayList<Tblregisterconference> listRegister = TblregisterconferenceDAO.allByConference(idCon);
+            ArrayList<UserVisible> listUser = new ArrayList<>();
+            for (int i = 0; i < listRegister.size(); i++) {
+                listUser.add(singleById(listRegister.get(i).getId()));
+            }
+            return listUser;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         } finally {
             tx.commit();
             session.close();
@@ -62,13 +82,44 @@ public class TblUserDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
 
-        Query query = session.createQuery("from Tbluser where username = '" + username + "'");
-        if (query.list().size() < 1) {
+        try {
+            Query query = session.createQuery("from Tbluser where username = '" + username + "'");
+            if (query.list().size() < 1) {
+                return null;
+            }
+            Tbluser user = (Tbluser) query.list().get(0);
+
+            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
+        } finally {
+            tx.commit();
+            session.close();
         }
-        Tbluser user = (Tbluser) query.list().get(0);
-        session.close();
-        return user;
+
+    }
+
+    public static UserVisible singleById(int id) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+
+        try {
+            Query query = session.createQuery("from Tbluser where id = " + id + "");
+            if (query.list().size() < 1) {
+                return null;
+            }
+            Tbluser user = (Tbluser) query.list().get(0);
+            UserVisible userVisible = new UserVisible(user);
+            return userVisible;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            tx.commit();
+//            session.close();
+        }
+
     }
 
     public static void update(Tbluser user) {
