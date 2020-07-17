@@ -6,9 +6,7 @@
 package conferencemanagement;
 
 import dao.TblConferenceDAO;
-import dao.TblUserDAO;
 import entity.ConferenceVisible;
-import entity.UserVisible;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,6 +23,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -38,6 +38,9 @@ public class ManageConferenceController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
+    @FXML
+    private AnchorPane acContainer;
     
     @FXML
     private TableView<ConferenceVisible> tblConference;
@@ -108,5 +111,18 @@ public class ManageConferenceController implements Initializable {
 
         tblConference.getColumns().addAll(IdCol, nameCol, addressCol, limitCol, startTimeCol, endTimeCol);
     }    
+    
+    @FXML
+    public void NewConference(MouseEvent event){
+        acContainer.getChildren().removeAll();
+        Parent root = null;
+
+        try {
+            root = FXMLLoader.load(getClass().getResource("NewConference.fxml"));
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        acContainer.getChildren().add(root);
+    }
     
 }

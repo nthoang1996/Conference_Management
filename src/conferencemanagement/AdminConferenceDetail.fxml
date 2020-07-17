@@ -152,6 +152,14 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
+                  <Button fx:id="btnEdit" mnemonicParsing="false" onMouseClicked="#EditConference" text="Edit">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
                   <Button fx:id="btnCancle" mnemonicParsing="false" onMouseClicked="#DoClose" text="Close">
                      <font>
                         <Font size="15.0" />

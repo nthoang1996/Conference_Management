@@ -15,12 +15,12 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -116,6 +116,23 @@ public class AdminConferenceDetailController implements Initializable {
     private void DoClose(MouseEvent event) {
         Stage stage = (Stage) btnCancle.getScene().getWindow();
         stage.close();
+    }
+    
+    @FXML
+    private void EditConference(MouseEvent event) {
+        Date startTime = this.conferenceItem.getStartTime();
+        Calendar calStart = Calendar.getInstance();
+        calStart.setTime(startTime);
+        calStart.add(Calendar.HOUR, -7);
+        Date currentDate = new Date();
+        if (calStart.getTime().compareTo(currentDate) < 1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Registration Error");
+            alert.setHeaderText("Registration error");
+            alert.setContentText("The conference has occured!");
+            alert.showAndWait();
+            return;
+        }
     }
     
     public void setConference(ConferenceVisible conference){

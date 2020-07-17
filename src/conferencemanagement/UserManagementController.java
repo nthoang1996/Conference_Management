@@ -5,26 +5,16 @@
  */
 package conferencemanagement;
 
-import conferencemanagement.utils.GlobalData;
-import dao.TblConferenceDAO;
 import dao.TblUserDAO;
-import entity.MyConferenceItem;
-import entity.Tbluser;
 import entity.UserVisible;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

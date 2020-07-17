@@ -24,7 +24,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -99,6 +98,9 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void ToHome(MouseEvent event) {
+        List<ConferenceVisible> listConference = TblConferenceDAO.all();
+        conferenceObservableList = FXCollections.observableArrayList(listConference);
+        lvConference.setItems(conferenceObservableList);
         bpBody.setCenter(apContainer);
     }
 

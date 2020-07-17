@@ -5,10 +5,8 @@
  */
 package conferencemanagement;
 
-import com.sun.imageio.plugins.common.I18N;
 import conferencemanagement.utils.GlobalData;
 import entity.ConferenceVisible;
-import entity.Tblconference;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -24,7 +22,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

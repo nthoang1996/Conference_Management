@@ -5,7 +5,6 @@
  */
 package conferencemanagement;
 
-import conferencemanagement.utils.GlobalData;
 import dao.TblregisterconferenceDAO;
 import entity.ConferenceVisible;
 import entity.Tblregisterconference;
@@ -130,9 +129,29 @@ public class ConferenceByUserController implements Initializable {
         Stage stage = (Stage) btnCancle.getScene().getWindow();
         stage.close();
     }
+    
+    public boolean verifyAction(){
+        Date startTime = this.conferenceItem.getStartTime();
+        Calendar calStart = Calendar.getInstance();
+        calStart.setTime(startTime);
+        calStart.add(Calendar.HOUR, -7);
+        Date currentDate = new Date();
+        if (calStart.getTime().compareTo(currentDate) < 1) {
+            return false;
+        }
+        return true;
+    }
 
     @FXML
     private void DoAccept(MouseEvent event) {
+        if (!verifyAction()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Accept Error");
+            alert.setHeaderText("Accept error");
+            alert.setContentText("The conference has occured!");
+            alert.showAndWait();
+            return;
+        }
         if (TblregisterconferenceDAO.updateStatus(this.conferenceItem.getId(), this.user.getId(), 2)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Accept success");
@@ -152,6 +171,14 @@ public class ConferenceByUserController implements Initializable {
 
     @FXML
     private void DoDeny(MouseEvent event) {
+        if (!verifyAction()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Deny Error");
+            alert.setHeaderText("Deny error");
+            alert.setContentText("The conference has occured!");
+            alert.showAndWait();
+            return;
+        }
         if (TblregisterconferenceDAO.updateStatus(this.conferenceItem.getId(), this.user.getId(), 3)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Deny success");

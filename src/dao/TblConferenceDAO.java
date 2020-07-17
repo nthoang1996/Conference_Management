@@ -14,6 +14,7 @@ import entity.MyConferenceItem;
 import entity.Tblconference;
 import entity.Tblregisterconference;
 import entity.Tbluser;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,13 +31,32 @@ public class TblConferenceDAO {
 
     static Session session = null;
 
-    public static void insert(Tblconference user) {
+    public static boolean insert(Tblconference conference, String imagePath) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
-        session.save(user);
-        tx.commit();
-//        session.flush();
-        session.close();
+        try {
+            session.save(conference);
+            String path = System.getProperty("user.dir") + "/src/asset/picture/" + conference.getId();
+             File file = new File(path);
+            //Creating the directory
+            boolean bool = file.mkdir();
+            if (!bool) {
+                return false;
+            }
+            String filePathString = path + "/main.png";
+            file = new File(filePathString);
+            file.createNewFile();
+            Helper.createImage(filePathString, imagePath);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+            return false;
+        }
+        finally{
+            tx.commit();
+            session.close();
+        }  
     }
 
     public static ArrayList<ConferenceVisible> all() {

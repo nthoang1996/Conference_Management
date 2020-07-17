@@ -7,23 +7,19 @@ package conferencemanagement;
 
 import conferencemanagement.utils.GlobalData;
 import conferencemanagement.utils.Helper;
-import dao.TblConferenceDAO;
 import dao.TblregisterconferenceDAO;
 import entity.ConferenceVisible;
-import entity.Tblconference;
 import entity.Tbluser;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,10 +29,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 /**
  * FXML Controller class
@@ -143,6 +139,19 @@ public class ConferenceDetailController implements Initializable {
 
     @FXML
     private void DoRegister(MouseEvent event) {
+        Date startTime = this.conferenceItem.getStartTime();
+        Calendar calStart = Calendar.getInstance();
+        calStart.setTime(startTime);
+        calStart.add(Calendar.HOUR, -7);
+        Date currentDate = new Date();
+        if (calStart.getTime().compareTo(currentDate) < 1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Registration Error");
+            alert.setHeaderText("Registration error");
+            alert.setContentText("The conference has occured!");
+            alert.showAndWait();
+            return;
+        }
         if (type == 1) {
             if (TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()) != null && TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()).size() >= this.conferenceItem.getLocationLimit()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);

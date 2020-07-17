@@ -5,11 +5,8 @@
  */
 package conferencemanagement;
 
-import conferencemanagement.utils.GlobalData;
-import dao.TblConferenceDAO;
 import dao.TblUserDAO;
 import entity.ConferenceVisible;
-import entity.MyConferenceItem;
 import entity.UserVisible;
 import java.io.IOException;
 import java.net.URL;

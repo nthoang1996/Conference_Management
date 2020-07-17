@@ -5,15 +5,11 @@
  */
 package conferencemanagement;
 
-import conferencemanagement.utils.GlobalData;
 import dao.TblConferenceDAO;
 import entity.MyConferenceItem;
 import entity.UserVisible;
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +26,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import jdk.nashorn.internal.objects.Global;
 
 /**
  * FXML Controller class

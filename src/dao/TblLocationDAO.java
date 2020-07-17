@@ -7,6 +7,7 @@ package dao;
 
 import static dao.TblUserDAO.session;
 import entity.Tbllocation;
+import java.util.ArrayList;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -34,6 +35,24 @@ public class TblLocationDAO {
             tx.commit();
             session.close();
         }
-
+    }
+    
+    public static ArrayList<Tbllocation> all() {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery("from Tbllocation");
+            if (query.list().size() < 1) {
+                return new ArrayList<>();
+            } else {
+                return (ArrayList< Tbllocation>) query.list();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        } finally {
+            tx.commit();
+            session.close();
+        }
     }
 }
