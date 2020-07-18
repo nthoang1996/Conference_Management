@@ -149,7 +149,7 @@ public class EditConferenceController implements Initializable {
     
     public boolean validateLocation(Date startTime, Date endTime){
         int id = cbBoxLocation.getSelectionModel().getSelectedItem().getId();
-        ArrayList<ConferenceVisible> listConference = TblConferenceDAO.allByLocationId(id);
+        ArrayList<ConferenceVisible> listConference = TblConferenceDAO.allByLocationIdWithoutThis(id, this.conference.getId());
         for(int i = 0 ; i< listConference.size(); i++){
             if(startTime.compareTo(listConference.get(i).getStartTime()) >= 0 && startTime.compareTo(listConference.get(i).getEndTime()) <= 0){
                 return false;
@@ -157,13 +157,10 @@ public class EditConferenceController implements Initializable {
             if(endTime.compareTo(listConference.get(i).getStartTime()) >= 0 && endTime.compareTo(listConference.get(i).getEndTime()) <= 0){
                 return false;
             }
-            if(endTime.compareTo(listConference.get(i).getStartTime()) >= 0 && endTime.compareTo(listConference.get(i).getEndTime()) <= 0){
+            if(listConference.get(i).getStartTime().compareTo(startTime) >= 0 && listConference.get(i).getStartTime().compareTo(endTime) <= 0){
                 return false;
             }
-            if(listConference.get(i).getStartTime().compareTo(listConference.get(i).getStartTime()) >= 0 && listConference.get(i).getStartTime().compareTo(endTime) <= 0){
-                return false;
-            }
-            if(listConference.get(i).getEndTime().compareTo(listConference.get(i).getStartTime()) >= 0 && listConference.get(i).getEndTime().compareTo(endTime) <= 0){
+            if(listConference.get(i).getEndTime().compareTo(endTime) >= 0 && listConference.get(i).getEndTime().compareTo(endTime) <= 0){
                 return false;
             }
         }

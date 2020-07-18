@@ -11,22 +11,12 @@ import dao.TblLocationDAO;
 import entity.ConferenceVisible;
 import entity.Tblconference;
 import entity.Tbllocation;
-import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
-import java.nio.ByteBuffer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,7 +25,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -48,16 +37,11 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelFormat;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritablePixelFormat;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javax.imageio.ImageIO;
 
 /**
  * FXML Controller class
@@ -233,10 +217,10 @@ public class NewConferenceController implements Initializable {
             if(endTime.compareTo(listConference.get(i).getStartTime()) >= 0 && endTime.compareTo(listConference.get(i).getEndTime()) <= 0){
                 return false;
             }
-            if(listConference.get(i).getStartTime().compareTo(listConference.get(i).getStartTime()) >= 0 && listConference.get(i).getStartTime().compareTo(endTime) <= 0){
+            if(listConference.get(i).getStartTime().compareTo(startTime) >= 0 && listConference.get(i).getEndTime().compareTo(endTime) <= 0){
                 return false;
             }
-            if(listConference.get(i).getEndTime().compareTo(listConference.get(i).getStartTime()) >= 0 && listConference.get(i).getEndTime().compareTo(endTime) <= 0){
+            if(listConference.get(i).getEndTime().compareTo(endTime) >= 0 && listConference.get(i).getEndTime().compareTo(endTime) <= 0){
                 return false;
             }
         }

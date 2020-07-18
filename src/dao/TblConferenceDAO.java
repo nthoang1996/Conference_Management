@@ -200,5 +200,22 @@ public class TblConferenceDAO {
         }
         return (ArrayList< ConferenceVisible>) listConferenceVisible;
     }
+    
+    public static ArrayList<ConferenceVisible> allByLocationIdWithoutThis(int idLoc, int idCon) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+
+        Query query = session.createQuery("from Tblconference where location_id =" + idLoc + "and id <> " + idCon);
+        ArrayList<Tblconference> listConference = (ArrayList< Tblconference>) query.list();
+        tx.commit();
+        if (listConference.size() < 1) {
+            return new ArrayList<>();
+        }
+        ArrayList<ConferenceVisible> listConferenceVisible = new ArrayList<>();
+        for (int i = 0; i < listConference.size(); i++) {
+            listConferenceVisible.add(new ConferenceVisible(listConference.get(i), true));
+        }
+        return (ArrayList< ConferenceVisible>) listConferenceVisible;
+    }
 
 }

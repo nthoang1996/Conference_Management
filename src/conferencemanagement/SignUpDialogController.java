@@ -112,7 +112,7 @@ public class SignUpDialogController implements Initializable {
             String username = textFieldUsername.getText().trim();
             String password = pwFieldPassword.getText().trim();
             String mySecurePassword = PasswordUtils.generateSecurePassword(password, Config.salt);
-            int roleId = 3;
+            int roleId = 1;
             Tbluser userRegister = new Tbluser(name, email, username, mySecurePassword, roleId, false, false);
             TblUserDAO.insert(userRegister);
             Alert alert = new Alert(AlertType.INFORMATION);
