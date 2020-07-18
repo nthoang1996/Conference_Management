@@ -6,10 +6,14 @@
 package conferencemanagement;
 
 import conferencemanagement.utils.GlobalData;
+import conferencemanagement.utils.Helper;
 import dao.TblConferenceDAO;
+import entity.ConferenceVisible;
 import entity.MyConferenceItem;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,9 +25,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -42,11 +51,19 @@ public class MyConferenceController implements Initializable {
 
     ObservableList<MyConferenceItem> list;
 
+    @FXML
+    private ComboBox<String> cbSearchType;
+
+    @FXML
+    private TextField textFieldSearchQuery;
+
     int check = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        cbSearchType.getItems().addAll("Name", "Location");
+        cbSearchType.getSelectionModel().selectFirst();
         TableColumn<MyConferenceItem, String> IdCol //
                 = new TableColumn<MyConferenceItem, String>("ID");
 
@@ -118,6 +135,48 @@ public class MyConferenceController implements Initializable {
                 tblConference.setItems(list);
             }
         });
-
     }
+
+    @FXML
+    private void SearchItem(MouseEvent event) {
+        if (textFieldSearchQuery.getText().trim().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error has occur");
+            alert.setContentText("Query search is null");
+            alert.showAndWait();
+            return;
+        }
+        if (cbSearchType.getValue().equals("Name")) {
+            searchByName();
+        }
+        else {
+            searchByLocation();
+        }
+    }
+
+    public void searchByName() {
+        ArrayList<MyConferenceItem> listQuery = TblConferenceDAO.allByUserID(GlobalData.currentUser.getId());
+        ArrayList<MyConferenceItem> listResult = new ArrayList<>();
+        for (int i = 0; i < listQuery.size(); i++) {
+            if (listQuery.get(i).getName().toLowerCase().indexOf(textFieldSearchQuery.getText().toLowerCase())>=0) {
+                listResult.add(listQuery.get(i));
+            }
+        }
+        list.setAll(listResult);
+        tblConference.setItems(list);
+    }
+    
+    public void searchByLocation() {
+        ArrayList<MyConferenceItem> listQuery = TblConferenceDAO.allByUserID(GlobalData.currentUser.getId());
+        ArrayList<MyConferenceItem> listResult = new ArrayList<>();
+        for (int i = 0; i < listQuery.size(); i++) {
+            if (listQuery.get(i).getLocationName().toLowerCase().indexOf(textFieldSearchQuery.getText().toLowerCase())>=0) {
+                listResult.add(listQuery.get(i));
+            }
+        }
+        list.setAll(listResult);
+        tblConference.setItems(list);
+    }
+
 }

@@ -8,6 +8,7 @@ package conferencemanagement;
 import conferencemanagement.utils.Helper;
 import dao.TblConferenceDAO;
 import dao.TblLocationDAO;
+import entity.ConferenceVisible;
 import entity.Tblconference;
 import entity.Tbllocation;
 import java.awt.image.BufferedImage;
@@ -26,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -131,6 +133,7 @@ public class NewConferenceController implements Initializable {
                 alert.setHeaderText("Error has occur");
                 alert.setContentText("Time can not be null");
                 alert.showAndWait();
+                return;
             }
             if (start.compareTo(end) > 0) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -138,6 +141,7 @@ public class NewConferenceController implements Initializable {
                 alert.setHeaderText("Error has occur");
                 alert.setContentText("Start time can not be larger than end time!");
                 alert.showAndWait();
+                return;
             }
             Calendar calStart = Calendar.getInstance();
             calStart.setTime(start);
@@ -145,6 +149,14 @@ public class NewConferenceController implements Initializable {
             Calendar calEnd = Calendar.getInstance();
             calEnd.setTime(end);
             calEnd.add(Calendar.HOUR, +7);
+            if(!validateLocation(start, end)){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error has occur");
+                alert.setContentText("There is a conference is going to occured in this location at this time!");
+                alert.showAndWait();
+                return;
+            }
             Tblconference conference = new Tblconference(txtFieldName.getText(), txtFieldOverview.getText(), txtAreaDescription.getText(), cbBoxLocation.getSelectionModel().getSelectedItem().getId(), calStart.getTime(), calEnd.getTime());
             if (TblConferenceDAO.insert(conference, txtFieldAvatar.getText())) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -204,6 +216,29 @@ public class NewConferenceController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+        return true;
+    }
+    
+    public boolean validateLocation(Date startTime, Date endTime){
+        int id = cbBoxLocation.getSelectionModel().getSelectedItem().getId();
+        ArrayList<ConferenceVisible> listConference = TblConferenceDAO.allByLocationId(id);
+        for(int i = 0 ; i< listConference.size(); i++){
+            if(startTime.compareTo(listConference.get(i).getStartTime()) >= 0 && startTime.compareTo(listConference.get(i).getEndTime()) <= 0){
+                return false;
+            }
+            if(endTime.compareTo(listConference.get(i).getStartTime()) >= 0 && endTime.compareTo(listConference.get(i).getEndTime()) <= 0){
+                return false;
+            }
+            if(endTime.compareTo(listConference.get(i).getStartTime()) >= 0 && endTime.compareTo(listConference.get(i).getEndTime()) <= 0){
+                return false;
+            }
+            if(listConference.get(i).getStartTime().compareTo(listConference.get(i).getStartTime()) >= 0 && listConference.get(i).getStartTime().compareTo(endTime) <= 0){
+                return false;
+            }
+            if(listConference.get(i).getEndTime().compareTo(listConference.get(i).getStartTime()) >= 0 && listConference.get(i).getEndTime().compareTo(endTime) <= 0){
+                return false;
+            }
         }
         return true;
     }
