@@ -94,17 +94,9 @@ public class ConferenceItemController extends ListCell<ConferenceVisible>{
             Image image = new Image(imagePath);
             imgAvatar.setImage(image);
             lblNameConference.setText(conference.getName());
-            Date startTime = conference.getStartTime();
-            Calendar calStart = Calendar.getInstance();
-            calStart.setTime(startTime);
-            calStart.add(Calendar.HOUR, -7);
-            Date endTime = conference.getEndTime();
-            Calendar calEnd = Calendar.getInstance();
-            calEnd.setTime(endTime);
-            calEnd.add(Calendar.HOUR, -7);
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            lblStarttTime.setText("Start time: " + format.format(calStart.getTime()));
-            lblTakeTime.setText("End time: " + format.format(calEnd.getTime()));
+            lblStarttTime.setText("Start time: " + format.format(conference.getStartTime()));
+            lblTakeTime.setText("End time: " + format.format(conference.getEndTime()));
             lblLimit.setText("Limit: " + conference.getLocationLimit());
             if(conference.getRegister() == null){
                 lblNumRegis.setText("Number registed: 0");

@@ -37,7 +37,7 @@ public class TblConferenceDAO {
         try {
             session.save(conference);
             String path = System.getProperty("user.dir") + "/src/asset/picture/" + conference.getId();
-             File file = new File(path);
+            File file = new File(path);
             //Creating the directory
             boolean bool = file.mkdir();
             if (!bool) {
@@ -52,11 +52,45 @@ public class TblConferenceDAO {
             e.printStackTrace();
             tx.rollback();
             return false;
-        }
-        finally{
+        } finally {
             tx.commit();
             session.close();
-        }  
+        }
+    }
+
+    public static boolean update(Tblconference conference, String imagePath) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            String hql = "UPDATE Tblconference set name = :name, overview = :overview, description = :description, location_id = :location_id, start_time = :start_time, end_time = :end_time "
+                    + "WHERE id = :conference_id";
+            Query query = session.createQuery(hql);
+            query.setParameter("name", conference.getName());
+            query.setParameter("overview", conference.getOverview());
+            query.setParameter("description", conference.getDescription());
+            query.setParameter("location_id", conference.getLocationId());
+            query.setParameter("start_time", conference.getStartTime());
+            query.setParameter("end_time", conference.getEndTime());
+            query.setParameter("conference_id", conference.getId());
+            query.executeUpdate();
+            if (!imagePath.equals("")) {
+                String path = System.getProperty("user.dir") + "/src/asset/picture/" + conference.getId();
+                File file = new File(path);
+                //Creating the directory
+                String filePathString = path + "/main.png";
+                file = new File(filePathString);
+                file.createNewFile();
+                Helper.createImage(filePathString, imagePath);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+            return false;
+        } finally {
+            tx.commit();
+            session.close();
+        }
     }
 
     public static ArrayList<ConferenceVisible> all() {
@@ -75,7 +109,7 @@ public class TblConferenceDAO {
         }
         return (ArrayList< ConferenceVisible>) listConferenceVisible;
     }
-    
+
     public static ArrayList<ConferenceVisible> allIncludeDeny() {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
@@ -129,7 +163,7 @@ public class TblConferenceDAO {
         }
 
     }
-    
+
     public static ConferenceVisible singleByIdConAndIDUser(int idCon, int idUser) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();

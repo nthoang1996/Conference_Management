@@ -129,7 +129,7 @@ public class NewConferenceController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Error has occur");
-                alert.setContentText("Name can not be null");
+                alert.setContentText("Time can not be null");
                 alert.showAndWait();
             }
             if (start.compareTo(end) > 0) {
@@ -160,7 +160,6 @@ public class NewConferenceController implements Initializable {
                 alert.setContentText("An error has occured. Please try again later!");
                 alert.showAndWait();
             }
-
         }
     }
 

@@ -72,17 +72,9 @@ public class ConferenceCardItemController implements Initializable {
             Image image = new Image(imagePath);
             imgAvatar.setImage(image);
             lblNameConference.setText(this.conferenceItem.getName());
-            Date startTime = this.conferenceItem.getStartTime();
-            Calendar calStart = Calendar.getInstance();
-            calStart.setTime(startTime);
-            calStart.add(Calendar.HOUR, -7);
-            Date endTime = this.conferenceItem.getEndTime();
-            Calendar calEnd = Calendar.getInstance();
-            calEnd.setTime(endTime);
-            calEnd.add(Calendar.HOUR, -7);
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            lblStarttTime.setText("Start time: " + format.format(calStart.getTime()));
-            lblTakeTime.setText("End time: " + format.format(calEnd.getTime()));
+            lblStarttTime.setText("Start time: " + format.format(this.conferenceItem.getStartTime()));
+            lblTakeTime.setText("End time: " + format.format(this.conferenceItem.getEndTime()));
             lblLimit.setText("Limit: " + this.conferenceItem.getLocationLimit());
             if(this.conferenceItem.getRegister()==null){
                 lblNumRegis.setText("Number registed:0");

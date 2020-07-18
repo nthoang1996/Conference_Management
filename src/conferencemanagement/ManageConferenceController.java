@@ -6,12 +6,14 @@
 package conferencemanagement;
 
 import dao.TblConferenceDAO;
+import dao.TblUserDAO;
 import entity.ConferenceVisible;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -100,7 +102,7 @@ public class ManageConferenceController implements Initializable {
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setScene(scene);
                 stage.showAndWait();
-//                reloadTable();
+                reloadTable();
 
             } catch (IOException ex) {
                 Logger.getLogger(ConferenceDetailController.class.getName()).log(Level.SEVERE, null, ex);
@@ -110,7 +112,18 @@ public class ManageConferenceController implements Initializable {
         tblConference.getSelectionModel().selectedItemProperty().addListener(listener);
 
         tblConference.getColumns().addAll(IdCol, nameCol, addressCol, limitCol, startTimeCol, endTimeCol);
-    }    
+    }
+    
+    public void reloadTable() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                list = FXCollections.observableList(TblConferenceDAO.allIncludeDeny());
+                tblConference.setItems(list);
+            }
+        });
+
+    }
     
     @FXML
     public void NewConference(MouseEvent event){

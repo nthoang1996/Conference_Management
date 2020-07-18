@@ -125,8 +125,6 @@ public class TblUserDAO {
     public static void update(Tbluser user) {
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        System.out.println("dao.TblUserDAO.update()" + user.getPassword().equals(""));
-        System.out.println("dao.TblUserDAO.update()" + user.getPassword());
         if (user.getPassword().equals("")) {
             String hql = "UPDATE Tbluser set name = :name, email = :email "
                     + "WHERE id = :user_id";

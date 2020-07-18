@@ -5,6 +5,7 @@
  */
 package conferencemanagement;
 
+import dao.TblConferenceDAO;
 import entity.ConferenceVisible;
 import java.io.IOException;
 import java.net.URL;
@@ -66,37 +67,32 @@ public class AdminConferenceDetailController implements Initializable {
     private Button btnCancle;
 
     ConferenceVisible conferenceItem;
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         Platform.runLater(() -> {
-            lblName.setText(this.conferenceItem.getName());
-            Date startTime = this.conferenceItem.getStartTime();
-            Calendar calStart = Calendar.getInstance();
-            calStart.setTime(startTime);
-            calStart.add(Calendar.HOUR, -7);
-            Date endTime = this.conferenceItem.getEndTime();
-            Calendar calEnd = Calendar.getInstance();
-            calEnd.setTime(endTime);
-            calEnd.add(Calendar.HOUR, -7);
-            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            lblStartTime.setText(format.format(calStart.getTime()));
-            lblEndtime.setText(format.format(calEnd.getTime()));
-            lblLimit.setText(this.conferenceItem.getLocationLimit() + "");
-            if (this.conferenceItem.getRegister() == null) {
-                lblNumRegis.setText("0");
-            } else {
-                lblNumRegis.setText(this.conferenceItem.getRegister().size() + "");
-            }
-            lblAddress.setText(this.conferenceItem.getLocationName());
-            txtAreaDescription.setText(this.conferenceItem.getDescription());
+            rendering();
         });
-    }    
-    
+    }
+
+    public void rendering() {
+        lblName.setText(this.conferenceItem.getName());
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        lblStartTime.setText(format.format(this.conferenceItem.getStartTime()));
+        lblEndtime.setText(format.format(this.conferenceItem.getEndTime()));
+        lblLimit.setText(this.conferenceItem.getLocationLimit() + "");
+        if (this.conferenceItem.getRegister() == null) {
+            lblNumRegis.setText("0");
+        } else {
+            lblNumRegis.setText(this.conferenceItem.getRegister().size() + "");
+        }
+        lblAddress.setText(this.conferenceItem.getLocationName());
+        txtAreaDescription.setText(this.conferenceItem.getDescription());
+    }
+
     @FXML
-    private void ShowListRegister(MouseEvent event){
+    private void ShowListRegister(MouseEvent event) {
         try {
             FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("ListRegisterUser.fxml"));
             Parent parent = fXMLLoader.load();
@@ -111,32 +107,58 @@ public class AdminConferenceDetailController implements Initializable {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    public void reload() {
+        conferenceItem = new ConferenceVisible(TblConferenceDAO.singleById(this.conferenceItem.getId()));
+        rendering();
+    }
+
     @FXML
     private void DoClose(MouseEvent event) {
         Stage stage = (Stage) btnCancle.getScene().getWindow();
         stage.close();
     }
-    
+
     @FXML
     private void EditConference(MouseEvent event) {
-        Date startTime = this.conferenceItem.getStartTime();
-        Calendar calStart = Calendar.getInstance();
-        calStart.setTime(startTime);
-        calStart.add(Calendar.HOUR, -7);
-        Date currentDate = new Date();
-        if (calStart.getTime().compareTo(currentDate) < 1) {
+        try {
+            Date startTime = this.conferenceItem.getStartTime();
+            Calendar calStart = Calendar.getInstance();
+            calStart.setTime(startTime);
+            calStart.add(Calendar.HOUR, -7);
+            Date currentDate = new Date();
+            if (calStart.getTime().compareTo(currentDate) < 1) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Registration Error");
+                alert.setHeaderText("Registration error");
+                alert.setContentText("The conference has occured!");
+                alert.showAndWait();
+                return;
+            }
+            FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("EditConference.fxml"));
+            Parent parent = fXMLLoader.load();
+            EditConferenceController editDialogController = fXMLLoader.<EditConferenceController>getController();
+            editDialogController.setConference(this.conferenceItem);
+            Scene scene = new Scene(parent, 1000, 700);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
+            reload();
+        } catch (IOException ex) {
+            Logger.getLogger(AdminConferenceDetailController.class.getName()).log(Level.SEVERE, null, ex);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Registration Error");
             alert.setHeaderText("Registration error");
-            alert.setContentText("The conference has occured!");
+            alert.setContentText("Some error has occured. Please try again later!");
             alert.showAndWait();
             return;
         }
+
     }
-    
-    public void setConference(ConferenceVisible conference){
+
+    public void setConference(ConferenceVisible conference) {
         this.conferenceItem = conference;
     }
-    
+
 }

@@ -86,17 +86,9 @@ public class ConferenceDetailController implements Initializable {
         // TODO
         Platform.runLater(() -> {
             lblName.setText(this.conferenceItem.getName());
-            Date startTime = this.conferenceItem.getStartTime();
-            Calendar calStart = Calendar.getInstance();
-            calStart.setTime(startTime);
-            calStart.add(Calendar.HOUR, -7);
-            Date endTime = this.conferenceItem.getEndTime();
-            Calendar calEnd = Calendar.getInstance();
-            calEnd.setTime(endTime);
-            calEnd.add(Calendar.HOUR, -7);
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            lblStartTime.setText(format.format(calStart.getTime()));
-            lblEndtime.setText(format.format(calEnd.getTime()));
+            lblStartTime.setText(format.format(this.conferenceItem.getStartTime()));
+            lblEndtime.setText(format.format(this.conferenceItem.getEndTime()));
             lblLimit.setText(this.conferenceItem.getLocationLimit() + "");
             if (this.conferenceItem.getRegister() == null) {
                 lblNumRegis.setText("0");

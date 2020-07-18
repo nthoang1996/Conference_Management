@@ -12,7 +12,9 @@
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ManageConferenceController.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/SignUpDialogController.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/utils/Config.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/entity/MyConferenceItem.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceDetailController.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/entity/ConferenceVisible.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/AdminConferenceDetailController.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ListRegisterUser.fxml</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ListRegisterController.java</file>
@@ -20,18 +22,22 @@
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/FXMLDocumentController.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/AdminConferenceDetail.fxml</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ListRegisterUserController.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/EditConference.fxml</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/dao/TblregisterconferenceDAO.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/dao/TblUserDAO.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceCardItemController.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/UserManagementController.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/dao/TblConferenceDAO.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceByUser.fxml</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/SignInDialog.fxml</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/UserDetailController.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/NewConferenceController.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceItemController.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/ConferenceManagement.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/utils/Helper.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/MyConferenceController.java</file>
             <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/utils/GlobalData.java</file>
+            <file>file:/C:/Users/Hoang%20IT/Documents/NetBeansProjects/ConferenceManagement/src/conferencemanagement/EditConferenceController.java</file>
         </group>
     </open-files>
 </project-private>

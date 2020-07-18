@@ -8,6 +8,8 @@ package entity;
 import conferencemanagement.utils.Helper;
 import dao.TblLocationDAO;
 import dao.TblregisterconferenceDAO;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -52,8 +54,16 @@ public class MyConferenceItem extends Tblconference {
         Tbllocation myLocation = TblLocationDAO.singleById(this.locationId);
         this.locationName = myLocation.getName();
         this.locationLimit = myLocation.getMyLimit();
-        this.startTime = conference.getStartTime();
-        this.endTime = conference.getEndTime();
+        Date startTime = conference.getStartTime();
+        Calendar calStart = Calendar.getInstance();
+        calStart.setTime(startTime);
+        calStart.add(Calendar.HOUR, -7);
+        Date endTime = conference.getEndTime();
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.setTime(endTime);
+        calEnd.add(Calendar.HOUR, -7);
+        this.startTime = calStart.getTime();
+        this.endTime = calEnd.getTime();
         switch (status) {
                 case 1:
                     this.status = "Aprroving";

@@ -8,12 +8,15 @@ package entity;
 import dao.TblLocationDAO;
 import dao.TblregisterconferenceDAO;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
  * @author Hoang IT
  */
-public class ConferenceVisible extends Tblconference{
+public class ConferenceVisible extends Tblconference {
+
     private ArrayList<Tblregisterconference> register;
     private String locationName;
     private int locationLimit;
@@ -33,7 +36,6 @@ public class ConferenceVisible extends Tblconference{
     public void setLocationLimit(int locationLimit) {
         this.locationLimit = locationLimit;
     }
-    
 
     public ArrayList<Tblregisterconference> getRegister() {
         return register;
@@ -42,36 +44,52 @@ public class ConferenceVisible extends Tblconference{
     public void setRegister(ArrayList<Tblregisterconference> register) {
         this.register = register;
     }
-    
-    public ConferenceVisible(Tblconference conference){
+
+    public ConferenceVisible(Tblconference conference) {
         this.id = conference.getId();
         this.name = conference.getName();
         this.overview = conference.getOverview();
         this.description = conference.getDescription();
         this.locationId = conference.getLocationId();
-        this.startTime = conference.getStartTime();
-        this.endTime = conference.getEndTime();
+        Date startTime = conference.getStartTime();
+        Calendar calStart = Calendar.getInstance();
+        calStart.setTime(startTime);
+        calStart.add(Calendar.HOUR, -7);
+        Date endTime = conference.getEndTime();
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.setTime(endTime);
+        calEnd.add(Calendar.HOUR, -7);
+        this.startTime = calStart.getTime();
+        this.endTime = calEnd.getTime();
         this.register = TblregisterconferenceDAO.allByConference(this.id);
         Tbllocation myLocation = TblLocationDAO.singleById(this.locationId);
         this.locationName = myLocation.getName();
         this.locationLimit = myLocation.getMyLimit();
     }
-    
-    public ConferenceVisible(Tblconference conference, boolean admin){
+
+    public ConferenceVisible(Tblconference conference, boolean admin) {
         this.id = conference.getId();
         this.name = conference.getName();
         this.overview = conference.getOverview();
         this.description = conference.getDescription();
         this.locationId = conference.getLocationId();
-        this.startTime = conference.getStartTime();
-        this.endTime = conference.getEndTime();
+        Date startTime = conference.getStartTime();
+        Calendar calStart = Calendar.getInstance();
+        calStart.setTime(startTime);
+        calStart.add(Calendar.HOUR, -7);
+        Date endTime = conference.getEndTime();
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.setTime(endTime);
+        calEnd.add(Calendar.HOUR, -7);
+        this.startTime = calStart.getTime();
+        this.endTime = calEnd.getTime();
         this.register = TblregisterconferenceDAO.allByConferenceIncludeDeny(this.id);
         Tbllocation myLocation = TblLocationDAO.singleById(this.locationId);
         this.locationName = myLocation.getName();
         this.locationLimit = myLocation.getMyLimit();
     }
-    
-    public ConferenceVisible(Tblregisterconference register){
-        
+
+    public ConferenceVisible(Tblregisterconference register) {
+
     }
 }

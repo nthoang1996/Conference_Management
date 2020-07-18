@@ -29,6 +29,16 @@ public class Tblconference  implements java.io.Serializable {
        this.startTime = startTime;
        this.endTime = endTime;
     }
+    
+    public Tblconference(int id, String name, String overview, String description, int locationId, Date startTime, Date endTime) {
+       this.id = id;
+       this.name = name;
+       this.overview = overview;
+       this.description = description;
+       this.locationId = locationId;
+       this.startTime = startTime;
+       this.endTime = endTime;
+    }
    
     public Integer getId() {
         return this.id;
