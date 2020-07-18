@@ -85,28 +85,53 @@ public class UserDetailController implements Initializable {
 
     @FXML
     private void DoDisable(MouseEvent event) {
-        if (TblUserDAO.updateStatus(this.user.getId(), !this.user.isIsDisabled())) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle(btnDisable.getText() + " success");
-            alert.setHeaderText(btnDisable.getText() + " success");
-            alert.setContentText("Action success!");
-            alert.showAndWait();
-            this.user.setIsDisabled(!this.user.isIsDisabled());
-            if (this.user.isIsDisabled()) {
-                this.user.setStatusName("Disabled");
+        if (!this.user.isIsDisabled()) {
+            if (TblUserDAO.disableUser(this.user.getId())) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(btnDisable.getText() + " success");
+                alert.setHeaderText(btnDisable.getText() + " success");
+                alert.setContentText("Action success!");
+                alert.showAndWait();
+                this.user.setIsDisabled(!this.user.isIsDisabled());
+                if (this.user.isIsDisabled()) {
+                    this.user.setStatusName("Disabled");
+                } else {
+                    this.user.setStatusName("Enabled");
+                }
+                reload();
             } else {
-                this.user.setStatusName("Enabled");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(btnDisable.getText() + " error");
+                alert.setHeaderText(btnDisable.getText() + " error");
+                alert.setContentText("An error has occured! Please try again later.");
+                alert.showAndWait();
             }
-            reload();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(btnDisable.getText() + " error");
-            alert.setHeaderText(btnDisable.getText() + " error");
-            alert.setContentText("An error has occured! Please try again later.");
-            alert.showAndWait();
         }
+        else{
+            if (TblUserDAO.enableUser(this.user.getId())) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(btnDisable.getText() + " success");
+                alert.setHeaderText(btnDisable.getText() + " success");
+                alert.setContentText("Action success!");
+                alert.showAndWait();
+                this.user.setIsDisabled(!this.user.isIsDisabled());
+                if (this.user.isIsDisabled()) {
+                    this.user.setStatusName("Disabled");
+                } else {
+                    this.user.setStatusName("Enabled");
+                }
+                reload();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(btnDisable.getText() + " error");
+                alert.setHeaderText(btnDisable.getText() + " error");
+                alert.setContentText("An error has occured! Please try again later.");
+                alert.showAndWait();
+            }
+        }
+
     }
-    
+
     @FXML
     private void ShowListRegister(MouseEvent event) {
         try {

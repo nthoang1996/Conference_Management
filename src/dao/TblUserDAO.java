@@ -147,15 +147,44 @@ public class TblUserDAO {
         session.close();
     }
 
-    public static boolean updateStatus(int idUser, boolean status) {
+    public static boolean disableUser(int idUser) {
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         try {
-            String hql = "UPDATE Tbluser set is_disabled = :status "
+            String hql = "UPDATE Tbluser set is_disabled = true "
                     + "WHERE id = :user_id";
             Query query = session.createQuery(hql);
             query.setParameter("user_id", idUser);
-            query.setParameter("status", status);
+            query.executeUpdate();
+            query = session.createQuery("from Tblregisterconference where id_user = " + idUser);
+            if (query.list().size() > 0) {
+                ArrayList<Tblregisterconference> listRegister = (ArrayList<Tblregisterconference>) query.list();
+                for (int i = 0; i < listRegister.size(); i++) {
+                    boolean result = TblregisterconferenceDAO.updateStatus(listRegister.get(i).getId(), 0);
+                    if (!result) {
+                        throw new Exception("Error has occur");
+                    }
+                }
+            }
+
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            session.getTransaction().commit();
+            session.close();
+        }
+    }
+
+    public static boolean enableUser(int idUser) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        try {
+            String hql = "UPDATE Tbluser set is_disabled = false "
+                    + "WHERE id = :user_id";
+            Query query = session.createQuery(hql);
+            query.setParameter("user_id", idUser);
             query.executeUpdate();
             return true;
         } catch (Exception ex) {

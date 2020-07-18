@@ -116,6 +116,25 @@ public class TblregisterconferenceDAO {
             tx1.commit();
             session.close();
         }
-
+    }
+    
+    public static boolean updateStatus(int id, int status) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        try {
+            String hql = "UPDATE Tblregisterconference set status = :status "
+                    + "WHERE id = :id";
+            Query query = session.createQuery(hql);
+            query.setParameter("status", status);
+            query.setParameter("id", id);
+            query.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            tx1.commit();
+            session.close();
+        }
     }
 }
