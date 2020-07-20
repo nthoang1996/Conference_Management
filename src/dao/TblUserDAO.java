@@ -54,7 +54,7 @@ public class TblUserDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         try {
-            ArrayList<Tblregisterconference> listRegister = TblregisterconferenceDAO.allByConferenceIncludeDeny(idCon);
+            ArrayList<Tblregisterconference> listRegister = TblregisterconferenceDAO.allByConference(idCon);
             ArrayList<UserVisible> listUser = new ArrayList<>();
             for (int i = 0; i < listRegister.size(); i++) {
                 listUser.add(singleById(listRegister.get(i).getIdUser()));

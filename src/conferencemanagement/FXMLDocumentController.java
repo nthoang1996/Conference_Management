@@ -218,8 +218,10 @@ public class FXMLDocumentController implements Initializable {
                 if (rb != null) {
                     if (rb.getText().equals(radioViewList.getText())) {
                         bpListconference.setCenter(lvConference);
+                        reloadContainer();
                     } else {
                         bpListconference.setCenter(vbContainer);
+                        reloadContainer();
                     }
                 }
             }

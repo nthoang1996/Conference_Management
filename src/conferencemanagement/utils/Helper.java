@@ -27,15 +27,6 @@ import javax.imageio.ImageIO;
  */
 public class Helper {
 
-    public static int checkInclude(ArrayList<Tblregisterconference> listConference) {
-        for (int i = 0; i < listConference.size(); i++) {
-            if (GlobalData.currentUser.getId() == listConference.get(i).getIdUser()) {
-                return listConference.get(i).getStatus();
-            }
-        }
-        return 0;
-    }
-
     public static String decodeFilePathValue(String value) {
         try {
             return URLDecoder.decode(value, StandardCharsets.UTF_8.toString());

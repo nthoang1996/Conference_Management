@@ -5,6 +5,7 @@
  */
 package conferencemanagement;
 
+import dao.TblConferenceDAO;
 import dao.TblregisterconferenceDAO;
 import entity.ConferenceVisible;
 import entity.Tblregisterconference;
@@ -74,19 +75,6 @@ public class ConferenceByUserController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         Platform.runLater(() -> {
-            register = TblregisterconferenceDAO.singleByConferenceAndUser(this.conferenceItem.getId(), this.user.getId());
-            lblName.setText(this.conferenceItem.getName());
-            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            lblStartTime.setText(format.format(this.conferenceItem.getStartTime()));
-            lblEndtime.setText(format.format(this.conferenceItem.getEndTime()));
-            lblLimit.setText(this.conferenceItem.getLocationLimit() + "");
-            if (this.conferenceItem.getRegister() == null) {
-                lblNumRegis.setText("0");
-            } else {
-                lblNumRegis.setText(this.conferenceItem.getRegister().size() + "");
-            }
-            lblAddress.setText(this.conferenceItem.getLocationName());
-            txtAreaDescription.setText(this.conferenceItem.getDescription());
             reset();
         });
     }
@@ -100,6 +88,21 @@ public class ConferenceByUserController implements Initializable {
     }
 
     public void reset() {
+        this.conferenceItem = new ConferenceVisible(TblConferenceDAO.singleById(this.conferenceItem.getId()));
+        register = TblregisterconferenceDAO.singleByConferenceAndUser(this.conferenceItem.getId(), this.user.getId());
+        lblName.setText(this.conferenceItem.getName());
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        lblStartTime.setText(format.format(this.conferenceItem.getStartTime()));
+        lblEndtime.setText(format.format(this.conferenceItem.getEndTime()));
+        lblLimit.setText(this.conferenceItem.getLocationLimit() + "");
+        int count = 0;
+        if (this.conferenceItem.getRegister() == null) {
+            lblNumRegis.setText("0");
+        } else {
+            lblNumRegis.setText(this.conferenceItem.getRegister().size() + "");
+        }
+        lblAddress.setText(this.conferenceItem.getLocationName());
+        txtAreaDescription.setText(this.conferenceItem.getDescription());
         switch (register.getStatus()) {
             case 1:
                 btnAccept.setDisable(false);
@@ -121,8 +124,8 @@ public class ConferenceByUserController implements Initializable {
         Stage stage = (Stage) btnCancle.getScene().getWindow();
         stage.close();
     }
-    
-    public boolean verifyAction(){
+
+    public boolean verifyAction() {
         Date startTime = this.conferenceItem.getStartTime();
         Calendar calStart = Calendar.getInstance();
         calStart.setTime(startTime);

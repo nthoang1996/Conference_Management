@@ -9,6 +9,7 @@ import conferencemanagement.utils.GlobalData;
 import conferencemanagement.utils.Helper;
 import dao.TblregisterconferenceDAO;
 import entity.ConferenceVisible;
+import entity.Tblregisterconference;
 import entity.Tbluser;
 import java.io.IOException;
 import java.net.URL;
@@ -145,7 +146,7 @@ public class ConferenceDetailController implements Initializable {
             return;
         }
         if (type == 1) {
-            if (TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()) != null && TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()).size() >= this.conferenceItem.getLocationLimit()) {
+            if (TblregisterconferenceDAO.allByConferenceAccepted(this.conferenceItem.getId()) != null && TblregisterconferenceDAO.allByConferenceAccepted(this.conferenceItem.getId()).size() >= this.conferenceItem.getLocationLimit()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Registration Error");
                 alert.setHeaderText("Registration error");
@@ -166,7 +167,7 @@ public class ConferenceDetailController implements Initializable {
             btnRegister.setText("Cancel Registration");
             type = 2;
             lblNotify.setText("(*)You have already register this conference!");
-            this.conferenceItem.setRegister(TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()));
+            this.conferenceItem.setRegister(TblregisterconferenceDAO.allByConferenceAccepted(this.conferenceItem.getId()));
             reload();
         } else {
             TblregisterconferenceDAO.updateStatus(this.conferenceItem.getId(), GlobalData.currentUser.getId(), 0);
@@ -175,7 +176,7 @@ public class ConferenceDetailController implements Initializable {
             alert.setHeaderText("Cancel registration success");
             alert.setContentText("You have canceled register for this conference!");
             alert.showAndWait();
-            this.conferenceItem.setRegister(TblregisterconferenceDAO.allByConference(this.conferenceItem.getId()));
+            this.conferenceItem.setRegister(TblregisterconferenceDAO.allByConferenceAccepted(this.conferenceItem.getId()));
             reload();
         }
         GlobalData.mainController.reloadContainer();
@@ -193,12 +194,13 @@ public class ConferenceDetailController implements Initializable {
     }
 
     public void reload() {
-        if (this.conferenceItem.getRegister() == null) {
+        Tblregisterconference register = TblregisterconferenceDAO.singleByConferenceAndUser(this.conferenceItem.getId(), GlobalData.currentUser.getId());
+        if (register == null) {
             btnRegister.setText("Registration");
             type = 1;
             lblNotify.setText("");
         } else {
-            switch (Helper.checkInclude(this.conferenceItem.getRegister())) {
+            switch (register.getStatus()) {
                 case 0:
                     btnRegister.setText("Registration");
                     type = 1;
