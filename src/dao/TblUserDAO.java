@@ -54,7 +54,26 @@ public class TblUserDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         try {
-            ArrayList<Tblregisterconference> listRegister = TblregisterconferenceDAO.allByConference(idCon);
+            ArrayList<Tblregisterconference> listRegister = TblregisterconferenceDAO.allByConferenceId(idCon);
+            ArrayList<UserVisible> listUser = new ArrayList<>();
+            for (int i = 0; i < listRegister.size(); i++) {
+                listUser.add(singleById(listRegister.get(i).getIdUser()));
+            }
+            return listUser;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        } finally {
+            tx.commit();
+            session.close();
+        }
+    }
+    
+    public static ArrayList<UserVisible> allAcceptedByConferenceId(int idCon) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            ArrayList<Tblregisterconference> listRegister = TblregisterconferenceDAO.allAcceptedByConferenceId(idCon);
             ArrayList<UserVisible> listUser = new ArrayList<>();
             for (int i = 0; i < listRegister.size(); i++) {
                 listUser.add(singleById(listRegister.get(i).getIdUser()));

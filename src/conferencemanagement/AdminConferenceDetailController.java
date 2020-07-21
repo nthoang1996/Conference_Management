@@ -97,7 +97,7 @@ public class AdminConferenceDetailController implements Initializable {
             FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("ListRegisterUser.fxml"));
             Parent parent = fXMLLoader.load();
             ListRegisterUserController listRegisterDialogController = fXMLLoader.<ListRegisterUserController>getController();
-            listRegisterDialogController.setConference(this.conferenceItem);
+            listRegisterDialogController.setConference(this.conferenceItem, true);
             Scene scene = new Scene(parent, 1000, 700);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);

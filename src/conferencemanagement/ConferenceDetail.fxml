@@ -144,7 +144,7 @@
             </TextArea>
             <AnchorPane>
                <children>
-                  <Button fx:id="btnRegister" layoutX="448.0" layoutY="-1.0" mnemonicParsing="false" onMouseClicked="#DoRegister" text="Registration" AnchorPane.rightAnchor="90.0">
+                  <Button fx:id="btnRegister" layoutX="448.0" layoutY="-1.0" mnemonicParsing="false" onMouseClicked="#DoRegister" text="Registration" AnchorPane.rightAnchor="245.0">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -155,6 +155,11 @@
                      </font>
                   </Button>
                   <Button fx:id="btnSignIn" layoutX="456.0" layoutY="-1.0" mnemonicParsing="false" onMouseClicked="#SignIn" text="Sign In" AnchorPane.rightAnchor="90.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnShowListRegister" layoutX="332.0" layoutY="-1.0" mnemonicParsing="false" onMouseClicked="#ShowListRegister" text="Show List Register" AnchorPane.rightAnchor="90.0">
                      <font>
                         <Font size="15.0" />
                      </font>

@@ -13,6 +13,8 @@ import entity.Tblconference;
 import java.awt.Dimension;
 import java.awt.Scrollbar;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -38,6 +41,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.input.MouseEvent;
@@ -46,6 +51,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -58,6 +64,9 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private Button btnSignin;
+    
+    @FXML
+    private Button btnSignOut;
 
     @FXML
     private Label lblCurrentUser;
@@ -127,6 +136,13 @@ public class FXMLDocumentController implements Initializable {
     private void ManageConference(MouseEvent event) {
         loadPage("ManageConference");
     }
+    
+    @FXML
+    private void DoSignOut(MouseEvent event) {
+        GlobalData.currentUser = null;
+        reload();
+        ToHome(event);
+    }
 
     @FXML
     private void SignIn(MouseEvent event) {
@@ -143,6 +159,7 @@ public class FXMLDocumentController implements Initializable {
                 btnSignin.setVisible(false);
                 lblCurrentUser.setText("Hi " + GlobalData.currentUser.getName() + "!");
                 lblCurrentUser.setVisible(true);
+                btnSignOut.setVisible(true);
             }
         } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -151,81 +168,85 @@ public class FXMLDocumentController implements Initializable {
     
     public void checkAuthorize(){
         if(GlobalData.currentUser == null){
-            btnProfile.setVisible(false);
-            btnMyConference.setVisible(false);
-            btnManageUser.setVisible(false);
-            btnManageConference.setVisible(false);
-        }
-        else if(GlobalData.currentUser.getRoleId() == 1){
-            btnProfile.setVisible(true);
-            btnMyConference.setVisible(true);
-        }
-        else if(GlobalData.currentUser.getRoleId() == 2){
-            btnManageUser.setVisible(true);
-            btnManageConference.setVisible(true);
             vBSideBar.getChildren().remove(btnProfile);
             vBSideBar.getChildren().remove(btnMyConference);
+            vBSideBar.getChildren().remove(btnManageUser);
+            vBSideBar.getChildren().remove(btnManageConference);
+        }
+        else if(GlobalData.currentUser.getRoleId() == 1){
+            vBSideBar.getChildren().add(btnProfile);
+            vBSideBar.getChildren().add(btnMyConference);
+        }
+        else if(GlobalData.currentUser.getRoleId() == 2){
+            vBSideBar.getChildren().add(btnManageUser);
+            vBSideBar.getChildren().add(btnManageConference);;
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        GlobalData.mainController = this;
-        checkAuthorize();
-        GridPane gpConference = new GridPane();
-        lblCurrentUser.setVisible(false);
-        lvConference.setItems(conferenceObservableList);
-        lvConference.setCellFactory(new Callback<ListView<ConferenceVisible>, ListCell<ConferenceVisible>>() {
-            @Override
-            public ListCell<ConferenceVisible> call(ListView<ConferenceVisible> studentListView) {
-                return new ConferenceItemController();
-            }
-        });
-        int colCnt = 0, rowCnt = 0;
-        for (int i = 0; i < conferenceObservableList.size(); i++) {
-            Parent root = null;
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ConferenceCardItem.fxml"));
-                root = (Parent) fxmlLoader.load();
-                ConferenceCardItemController controller = fxmlLoader.<ConferenceCardItemController>getController();
-                controller.setConference(conferenceObservableList.get(i));
-                fxmlLoader.setController(controller);
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            GridPane.setMargin(root, new Insets(20, 35, 20, 35));
-            gpConference.add(root, colCnt, rowCnt);
-            colCnt++;
-            if (colCnt >= Config.Columns) {
-                rowCnt++;
-                colCnt = 0;
-            }
-        }
-
-        spContainer.setContent(gpConference);
-        vbContainer.getChildren().add(spContainer);
-        VBox.setMargin(this.spContainer, new Insets(20, 20, 20, 20));
-
-        radioViewList.setToggleGroup(groupType);
-        radioViewCard.setToggleGroup(groupType);
-        groupType.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            public void changed(ObservableValue<? extends Toggle> ob,
-                    Toggle o, Toggle n) {
-
-                RadioButton rb = (RadioButton) groupType.getSelectedToggle();
-
-                if (rb != null) {
-                    if (rb.getText().equals(radioViewList.getText())) {
-                        bpListconference.setCenter(lvConference);
-                        reloadContainer();
-                    } else {
-                        bpListconference.setCenter(vbContainer);
-                        reloadContainer();
+        try {
+            // TODO
+            GlobalData.mainController = this;
+            checkAuthorize();
+            GridPane gpConference = new GridPane();
+            String path = System.getProperty("user.dir") + "/src/asset/logo/signout.png";
+            File sourceimage = new File(path);
+            BufferedImage imgBuffer = ImageIO.read(sourceimage);
+            Image img = SwingFXUtils.toFXImage(imgBuffer, null );
+            btnSignOut.setGraphic(new ImageView(img));
+            lblCurrentUser.setVisible(false);
+            btnSignOut.setVisible(false);
+            lvConference.setItems(conferenceObservableList);
+            lvConference.setCellFactory(new Callback<ListView<ConferenceVisible>, ListCell<ConferenceVisible>>() {
+                @Override
+                public ListCell<ConferenceVisible> call(ListView<ConferenceVisible> studentListView) {
+                    return new ConferenceItemController();
+                }
+            }); int colCnt = 0, rowCnt = 0;
+            for (int i = 0; i < conferenceObservableList.size(); i++) {
+                Parent root = null;
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ConferenceCardItem.fxml"));
+                    root = (Parent) fxmlLoader.load();
+                    ConferenceCardItemController controller = fxmlLoader.<ConferenceCardItemController>getController();
+                    controller.setConference(conferenceObservableList.get(i));
+                    fxmlLoader.setController(controller);
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                GridPane.setMargin(root, new Insets(20, 35, 20, 35));
+                gpConference.add(root, colCnt, rowCnt);
+                colCnt++;
+                if (colCnt >= Config.Columns) {
+                    rowCnt++;
+                    colCnt = 0;
+                }
+            }   spContainer.setContent(gpConference);
+            vbContainer.getChildren().add(spContainer);
+            VBox.setMargin(this.spContainer, new Insets(20, 20, 20, 20));
+            radioViewList.setToggleGroup(groupType);
+            radioViewCard.setToggleGroup(groupType);
+            groupType.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+                public void changed(ObservableValue<? extends Toggle> ob,
+                        Toggle o, Toggle n) {
+                    
+                    RadioButton rb = (RadioButton) groupType.getSelectedToggle();
+                    
+                    if (rb != null) {
+                        if (rb.getText().equals(radioViewList.getText())) {
+                            bpListconference.setCenter(lvConference);
+                            reloadContainer();
+                        } else {
+                            bpListconference.setCenter(vbContainer);
+                            reloadContainer();
+                        }
                     }
                 }
-            }
-        });
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public FXMLDocumentController() {
@@ -249,6 +270,13 @@ public class FXMLDocumentController implements Initializable {
             btnSignin.setVisible(false);
             lblCurrentUser.setText("Hi " + GlobalData.currentUser.getName() + "!");
             lblCurrentUser.setVisible(true);
+            btnSignOut.setVisible(true);
+            checkAuthorize();
+        }
+        else{
+            btnSignin.setVisible(true);
+            lblCurrentUser.setVisible(false);
+            btnSignOut.setVisible(false);
             checkAuthorize();
         }
     }

@@ -83,7 +83,7 @@ public class ConferenceVisible extends Tblconference {
         calEnd.add(Calendar.HOUR, -7);
         this.startTime = calStart.getTime();
         this.endTime = calEnd.getTime();
-        this.register = TblregisterconferenceDAO.allByConference(this.id);
+        this.register = TblregisterconferenceDAO.allByConferenceId(this.id);
         Tbllocation myLocation = TblLocationDAO.singleById(this.locationId);
         this.locationName = myLocation.getName();
         this.locationLimit = myLocation.getMyLimit();

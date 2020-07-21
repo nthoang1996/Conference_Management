@@ -44,6 +44,8 @@ public class ListRegisterUserController implements Initializable {
 
     ObservableList<UserVisible> list;
 
+    boolean isAdmin = false;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -70,37 +72,43 @@ public class ListRegisterUserController implements Initializable {
             emailCol.prefWidthProperty().bind(tblUser.widthProperty().multiply(0.35));
             usernameCol.prefWidthProperty().bind(tblUser.widthProperty().multiply(0.35));
 
-            list = FXCollections.observableList(TblUserDAO.allByConferenceId(this.conference.getId()));
-            tblUser.setItems(list);
-
-            tblUser.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                try {
-                    if (newSelection == null) {
-                        newSelection = oldSelection;
-                        return;
+            if (isAdmin) {
+                list = FXCollections.observableList(TblUserDAO.allByConferenceId(this.conference.getId()));
+                tblUser.setItems(list);
+                tblUser.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                    try {
+                        if (newSelection == null) {
+                            newSelection = oldSelection;
+                            return;
+                        }
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ConferenceByUser.fxml"));
+                        Parent parent = fxmlLoader.load();
+                        ConferenceByUserController controller = fxmlLoader.<ConferenceByUserController>getController();
+                        UserVisible item = (UserVisible) newSelection;
+                        controller.setConference(conference);
+                        controller.setUser(item);
+                        Scene scene = new Scene(parent, 600, 400);
+                        Stage stage = new Stage();
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.setScene(scene);
+                        stage.showAndWait();
+                        reloadTable();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ConferenceDetailController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ConferenceByUser.fxml"));
-                    Parent parent = fxmlLoader.load();
-                    ConferenceByUserController controller = fxmlLoader.<ConferenceByUserController>getController();
-                    UserVisible item = (UserVisible) newSelection;
-                    controller.setConference(conference);
-                    controller.setUser(item);
-                    Scene scene = new Scene(parent, 600, 400);
-                    Stage stage = new Stage();
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.setScene(scene);
-                    stage.showAndWait();
-                    reloadTable();
-                } catch (IOException ex) {
-                    Logger.getLogger(ConferenceDetailController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
+                });
+            }
+            else{
+                list = FXCollections.observableList(TblUserDAO.allAcceptedByConferenceId(this.conference.getId()));
+                tblUser.setItems(list); 
+            }
             tblUser.getColumns().addAll(IdCol, nameCol, emailCol, usernameCol);
         });
     }
 
-    public void setConference(ConferenceVisible conference) {
+    public void setConference(ConferenceVisible conference, boolean isAdmin) {
         this.conference = conference;
+        this.isAdmin = isAdmin;
     }
 
     public void reloadTable() {

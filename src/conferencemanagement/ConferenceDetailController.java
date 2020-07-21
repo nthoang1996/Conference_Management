@@ -77,6 +77,9 @@ public class ConferenceDetailController implements Initializable {
 
     @FXML
     private Button btnCancle;
+    
+    @FXML
+    private Button btnShowListRegister;
 
     ConferenceVisible conferenceItem;
     Tbluser currentUser;
@@ -100,11 +103,13 @@ public class ConferenceDetailController implements Initializable {
             txtAreaDescription.setText(this.conferenceItem.getDescription());
             if (this.currentUser == null) {
                 btnRegister.setVisible(false);
+                btnShowListRegister.setVisible(false);
                 lblNotify.setText("(*)You must Sign in to be able to Register this conference");
                 btnSignIn.setVisible(true);
             } else {
                 btnSignIn.setVisible(false);
                 btnRegister.setVisible(true);
+                btnShowListRegister.setVisible(true);
                 reload();
             }
         });
@@ -124,6 +129,7 @@ public class ConferenceDetailController implements Initializable {
             this.currentUser = GlobalData.currentUser;
             btnSignIn.setVisible(false);
             btnRegister.setVisible(true);
+            btnShowListRegister.setVisible(true);
             reload();
         } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -186,6 +192,24 @@ public class ConferenceDetailController implements Initializable {
     private void DoClose(MouseEvent event) {
         Stage stage = (Stage) btnCancle.getScene().getWindow();
         stage.close();
+    }
+    
+    @FXML
+    private void ShowListRegister(MouseEvent event) {
+         try {
+            FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("ListRegisterUser.fxml"));
+            Parent parent = fXMLLoader.load();
+            ListRegisterUserController listRegisterDialogController = fXMLLoader.<ListRegisterUserController>getController();
+            listRegisterDialogController.setConference(this.conferenceItem, false);
+            Scene scene = new Scene(parent, 1000, 700);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
+            reload();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void setConference(ConferenceVisible conference, Tbluser currentUser) {
